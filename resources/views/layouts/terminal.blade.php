@@ -67,11 +67,11 @@
             </button>
             <nav id="mainNav">
                 <ul>
-                    <li><a href="#home">Accueil</a></li>
-                    <li><a href="#about">À propos</a></li>
-                    <li><a href="#skills-web">Web Dev</a></li>
-                    <li><a href="#skills-sys">Systèmes</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="{{ url('/') }}#home">Accueil</a></li>
+                    <li><a href="{{ url('/') }}#about">À propos</a></li>
+                    <li><a href="{{ url('/') }}#skills-web">Web Dev</a></li>
+                    <li><a href="{{ url('/') }}#skills-sys">Systèmes</a></li>
+                    <li><a href="{{ url('/') }}#contact">Contact</a></li>
                     @auth
                         <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
                         <li>
