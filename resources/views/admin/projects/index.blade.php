@@ -9,7 +9,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            
+
             @if(session('success'))
                 <div class="terminal-alert success mb-6">
                     <span class="prompt">[OK]</span> {{ session('success') }}
@@ -32,6 +32,10 @@
                         <p class="text-sm mt-2 opacity-70">Créez votre premier projet pour commencer</p>
                     </div>
                 @else
+                    <!-- MESSAGE INFO MOBILE -->
+                    <div class="mobile-scroll-hint">
+                        <p>← Faites défiler horizontalement pour voir toutes les colonnes →</p>
+                    </div>
                     <div class="terminal-table-wrapper">
                         <table class="terminal-table">
                             <thead>
@@ -49,9 +53,8 @@
                                     <tr>
                                         <td>
                                             @if($project->image)
-                                                <img src="{{ Storage::url($project->image) }}" 
-                                                     alt="{{ $project->title }}" 
-                                                     class="project-thumbnail">
+                                                <img src="{{ Storage::url($project->image) }}" alt="{{ $project->title }}"
+                                                    class="project-thumbnail">
                                             @else
                                                 <div class="project-thumbnail-placeholder">
                                                     <span>?</span>
@@ -87,20 +90,16 @@
                                         <td class="text-center">{{ $project->order }}</td>
                                         <td>
                                             <div class="action-buttons">
-                                                <a href="{{ route('admin.projects.edit', $project) }}" 
-                                                   class="action-btn edit" 
-                                                   title="Modifier">
+                                                <a href="{{ route('admin.projects.edit', $project) }}" class="action-btn edit"
+                                                    title="Modifier">
                                                     ✎
                                                 </a>
-                                                <form action="{{ route('admin.projects.destroy', $project) }}" 
-                                                      method="POST" 
-                                                      class="inline"
-                                                      onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?');">
+                                                <form action="{{ route('admin.projects.destroy', $project) }}" method="POST"
+                                                    class="inline"
+                                                    onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?');">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" 
-                                                            class="action-btn delete" 
-                                                            title="Supprimer">
+                                                    <button type="submit" class="action-btn delete" title="Supprimer">
                                                         ✖
                                                     </button>
                                                 </form>

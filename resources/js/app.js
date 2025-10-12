@@ -4,6 +4,8 @@ import Alpine from 'alpinejs';
 window.Alpine = Alpine;
 Alpine.start();
 
+import './portfolio';
+
 // ============================================
 // 1. MENU BURGER - TOGGLE & GESTION
 // ============================================
@@ -203,3 +205,78 @@ document.addEventListener('DOMContentLoaded', () => {
   // Lancement de la progression
   setTimeout(step, 20);
 })();
+
+// Drag to scroll pour les tableaux
+document.addEventListener('DOMContentLoaded', function() {
+    const sliders = document.querySelectorAll('.terminal-table-wrapper');
+    
+    sliders.forEach(slider => {
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            slider.style.cursor = 'grabbing';
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+        });
+
+        slider.addEventListener('mouseup', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+        });
+
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2; // Vitesse du scroll
+            slider.scrollLeft = scrollLeft - walk;
+        });
+
+        // Support tactile pour mobile
+        slider.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        });
+
+        slider.addEventListener('touchmove', (e) => {
+            const x = e.touches[0].pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2;
+            slider.scrollLeft = scrollLeft - walk;
+        });
+    });
+});
+// Fonction toggle menu burger
+window.toggleMenu = function() {
+    const nav = document.getElementById('mainNav');
+    const toggle = document.getElementById('menuToggle');
+    
+    if (nav && toggle) {
+        nav.classList.toggle('active');
+        toggle.classList.toggle('active');
+    }
+};
+
+// Fermer le menu en cliquant sur un lien
+document.addEventListener('DOMContentLoaded', function() {
+    const navLinks = document.querySelectorAll('#mainNav a');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            const nav = document.getElementById('mainNav');
+            const toggle = document.getElementById('menuToggle');
+            
+            if (nav && toggle && nav.classList.contains('active')) {
+                nav.classList.remove('active');
+                toggle.classList.remove('active');
+            }
+        });
+    });
+});
