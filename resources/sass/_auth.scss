@@ -1,0 +1,275 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// Container principal pour les pages auth
+.auth-container {
+  min-height: 100vh;
+  @include flex-center;
+  padding: $spacing-sm;
+  position: relative;
+  z-index: $z-content;
+}
+
+// Box d'authentification
+.auth-box {
+  width: 100%;
+  max-width: 450px;
+  @include bg-overlay(0.05);
+  @include terminal-border();
+  padding: $spacing-lg;
+  position: relative;
+  
+  &::before {
+    content: "> system.auth.login";
+    display: block;
+    margin-bottom: $spacing-md;
+    opacity: 0.7;
+    font-size: 0.9rem;
+    color: $primary-color;
+  }
+}
+
+// Logo dans la box auth
+.auth-logo {
+  text-align: center;
+  margin-bottom: $spacing-md;
+  
+  img {
+    height: 80px;
+    width: auto;
+    margin: 0 auto;
+    filter: drop-shadow(0 0 10px rgba(14, 224, 39, 0.5));
+  }
+}
+
+// Titre de la page auth
+.auth-title {
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: $spacing-md;
+  @include glow($primary-color, 15px);
+  
+  &::before {
+    content: "~/";
+    margin-right: $spacing-xs;
+  }
+}
+
+// Formulaires
+.auth-form {
+  
+  .form-group {
+    margin-bottom: $spacing-sm;
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: $text-color;
+      font-weight: $font-weight-normal;
+      
+      &::before {
+        content: "$ ";
+        color: $primary-color;
+      }
+    }
+    
+    input {
+      width: 100%;
+      padding: 12px $spacing-sm;
+      background-color: rgba(14, 224, 39, 0.05);
+      border: 1px solid $border-color;
+      color: $text-color;
+      font-family: $font-primary;
+      @include transition(all);
+      
+      &:focus {
+        outline: none;
+        border-color: $primary-color;
+        @include box-glow($shadow-color, 15px);
+        @include bg-overlay(0.08);
+      }
+      
+      &::placeholder {
+        color: rgba(14, 224, 39, 0.4);
+      }
+    }
+    
+    // Messages d'erreur
+    .error-message {
+      display: block;
+      margin-top: 6px;
+      color: #ff4444;
+      font-size: 0.85rem;
+      
+      &::before {
+        content: "⚠ ";
+      }
+    }
+  }
+  
+  // Checkbox "Se souvenir de moi"
+  .form-checkbox {
+    display: flex;
+    align-items: center;
+    margin: $spacing-sm 0;
+    
+    input[type="checkbox"] {
+      width: auto;
+      margin-right: $spacing-xs;
+      accent-color: $primary-color;
+      cursor: pointer;
+    }
+    
+    label {
+      margin-bottom: 0;
+      cursor: pointer;
+      
+      &::before {
+        content: "";
+      }
+    }
+  }
+  
+  // Liens (mot de passe oublié, etc.)
+  .form-links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: $spacing-sm 0;
+    flex-wrap: wrap;
+    gap: $spacing-xs;
+    
+    a {
+      color: $text-color;
+      text-decoration: none;
+      font-size: 0.9rem;
+      @include transition(all);
+      
+      &:hover {
+        @include glow($primary-color, 10px);
+      }
+      
+      &::before {
+        content: "→ ";
+        margin-right: 4px;
+      }
+    }
+  }
+  
+  // Bouton submit
+  button[type="submit"],
+  .btn-primary {
+    width: 100%;
+    padding: 12px;
+    background-color: transparent;
+    border: $border-width solid $border-color;
+    color: $text-color;
+    font-family: $font-primary;
+    font-size: 1rem;
+    font-weight: $font-weight-normal;
+    cursor: pointer;
+    @include transition(all);
+    margin-top: $spacing-sm;
+    
+    &:hover {
+      background-color: $primary-color;
+      color: $bg-color;
+      @include box-glow($primary-color, 30px);
+      transform: scale(1.02);
+    }
+    
+    &::before {
+      content: "> ";
+      margin-right: 8px;
+    }
+  }
+}
+
+// Alerts (messages de succès/erreur)
+.alert {
+  padding: $spacing-sm;
+  margin-bottom: $spacing-sm;
+  border: 1px solid;
+  border-radius: 4px;
+  
+  &.alert-success {
+    background-color: rgba(14, 224, 39, 0.1);
+    border-color: $primary-color;
+    color: $text-color;
+    @include box-glow(rgba(14, 224, 39, 0.3), 10px);
+    
+    &::before {
+      content: "✓ ";
+      font-weight: bold;
+    }
+  }
+  
+  &.alert-error {
+    background-color: rgba(255, 68, 68, 0.1);
+    border-color: #ff4444;
+    color: #ff4444;
+    
+    &::before {
+      content: "✗ ";
+      font-weight: bold;
+    }
+  }
+}
+
+// Footer de la box auth
+.auth-footer {
+  margin-top: $spacing-md;
+  text-align: center;
+  padding-top: $spacing-sm;
+  border-top: 1px solid rgba(14, 224, 39, 0.2);
+  
+  .back-link {
+    color: $text-color;
+    text-decoration: none;
+    font-size: 0.9rem;
+    @include transition(all);
+    
+    &:hover {
+      @include glow($primary-color, 10px);
+    }
+  }
+}
+
+// Lien alternatif (ex: "Pas de compte ? S'inscrire")
+.auth-alternate {
+  text-align: center;
+  margin-top: $spacing-sm;
+  
+  a {
+    color: $text-color;
+    text-decoration: none;
+    @include transition(all);
+    
+    &:hover {
+      @include glow($primary-color, 10px);
+    }
+    
+    &::before {
+      content: "→ ";
+    }
+  }
+}
+
+// Responsive mobile
+@include mobile {
+  .auth-box {
+    padding: $spacing-md;
+    
+    &::before {
+      font-size: 0.8rem;
+    }
+  }
+  
+  .auth-title {
+    font-size: 1.5rem;
+  }
+  
+  .auth-logo img {
+    height: 60px;
+  }
+}
