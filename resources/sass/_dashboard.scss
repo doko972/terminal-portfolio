@@ -1,0 +1,201 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+// ====== DASHBOARD ======
+
+.dashboard-section {
+  padding: $spacing-xxl $spacing-sm;
+}
+
+// Message de bienvenue
+.welcome-message {
+  font-size: 1.1rem;
+  
+  strong {
+    color: $primary-color;
+    @include glow($primary-color, 8px);
+  }
+}
+
+// Grille de statistiques
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: $spacing-md;
+  margin: $spacing-lg 0;
+}
+
+.stat-card {
+  @include bg-overlay(0.05);
+  @include terminal-border();
+  padding: $spacing-md;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  @include transition(all);
+  
+  &:hover {
+    @include bg-overlay(0.1);
+    transform: translateY(-3px);
+    @include box-glow($shadow-color, 20px);
+  }
+  
+  .stat-icon {
+    font-size: 2.5rem;
+    filter: grayscale(100%) brightness(1.5);
+  }
+  
+  .stat-content {
+    flex: 1;
+    
+    h3 {
+      font-size: 0.9rem;
+      margin-bottom: 5px;
+      opacity: 0.8;
+    }
+    
+    .stat-value {
+      font-size: 1.3rem;
+      font-weight: $font-weight-bold;
+      margin-bottom: 3px;
+      @include glow($primary-color, 8px);
+    }
+    
+    .stat-label {
+      font-size: 0.8rem;
+      opacity: 0.6;
+    }
+  }
+}
+
+// Sous-titre de section
+.section-subtitle {
+  font-size: 1.3rem;
+  margin: $spacing-lg 0 $spacing-sm 0;
+  @include glow($primary-color, 10px);
+  
+  &::before {
+    content: "# ";
+    color: $primary-color;
+  }
+}
+
+// Actions rapides
+.dashboard-actions {
+  margin: $spacing-lg 0;
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: $spacing-sm;
+}
+
+.action-card {
+  @include bg-overlay(0.05);
+  border: 1px solid $border-color;
+  padding: $spacing-sm $spacing-md;
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  text-decoration: none;
+  color: $text-color;
+  @include transition(all);
+  
+  &:hover:not(.disabled) {
+    @include bg-overlay(0.1);
+    border-color: $primary-color;
+    transform: translateX(5px);
+    @include box-glow($shadow-color, 15px);
+  }
+  
+  &.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    
+    .action-badge {
+      margin-left: auto;
+      font-size: 0.75rem;
+      padding: 2px 8px;
+      border: 1px solid rgba(14, 224, 39, 0.3);
+      border-radius: 3px;
+    }
+  }
+  
+  .action-icon {
+    font-size: 1.5rem;
+    filter: grayscale(100%) brightness(1.5);
+  }
+  
+  .action-title {
+    flex: 1;
+    font-weight: $font-weight-normal;
+  }
+  
+  .action-arrow {
+    opacity: 0.6;
+    @include transition(all);
+  }
+  
+  &:hover:not(.disabled) .action-arrow {
+    opacity: 1;
+    transform: translateX(3px);
+  }
+}
+
+// Terminal dans le dashboard
+.dashboard-terminal {
+  margin-top: $spacing-lg;
+  @include bg-overlay(0.05);
+  @include terminal-border();
+  overflow: hidden;
+}
+
+.terminal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-xs $spacing-sm;
+  background-color: rgba(14, 224, 39, 0.1);
+  border-bottom: 1px solid $border-color;
+  
+  .terminal-title {
+    font-weight: $font-weight-bold;
+    font-size: 0.9rem;
+  }
+  
+  .terminal-status {
+    font-size: 0.8rem;
+    
+    &::before {
+      content: "● ";
+      color: $primary-color;
+      animation: pulse 2s ease-in-out infinite;
+    }
+  }
+}
+
+.terminal-content {
+  padding: $spacing-sm;
+  font-size: 0.9rem;
+  min-height: 150px;
+  
+  p {
+    margin: 5px 0;
+    opacity: 0.9;
+  }
+  
+  .terminal-cursor-line {
+    margin-top: $spacing-sm;
+  }
+}
+
+// Responsive
+@include mobile {
+  .dashboard-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .action-grid {
+    grid-template-columns: 1fr;
+  }
+}
