@@ -208,3 +208,57 @@ portfolio-terminal/
 └── README.md                                  # Ce fichier
 
 ```
+
+```
+### Dépannage:
+# Les images ne s'affichent pas
+```bash
+php artisan storage:link
+php artisan cache:clear
+```
+
+# Erreur 500 après installation
+```bash
+php artisan config:clear
+php artisan cache:clear
+php artisan view:clear
+```
+
+# Les assets ne se chargent pas
+```bash
+npm run build
+php artisan optimize
+```
+### Captures d'écran
+# Page d'accueil avec animation Matrix
+<img width="2215" height="1198" alt="Capture d'écran 2025-10-12 204254" src="https://github.com/user-attachments/assets/496880c6-92ce-4a3d-88bb-364c81d9ff0a" />
+
+# Boot Screen sécurisé
+<img width="1488" height="1082" alt="Capture d'écran 2025-10-12 204306" src="https://github.com/user-attachments/assets/3f6ff2d1-539e-4ef6-befe-dd915e78e86b" />
+
+### Roadmap
+Version 2.0 (À venir)
+
+ Formulaire de contact avec notification email
+ Timeline du parcours professionnel
+ Section Certifications
+ Upload et téléchargement de CV
+ Terminal interactif avec commandes
+ Mode sombre/clair
+ Multilingue (FR/EN)
+ Blog technique
+ API REST pour les projets
+
+### Licence
+Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
+### Auteur
+Doko972
+
+Email : doko972@gmail.com
+
+### Remerciements
+
+Laravel - Framework PHP
+Tailwind CSS - Framework CSS
+Matrix Rain Effect - Inspiration pour l'animation
+Google Fonts - Police Roboto Mono
