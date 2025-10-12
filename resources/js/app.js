@@ -75,35 +75,40 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('load', () => {
   const canvas = document.getElementById("matrix-canvas");
   
-  if (canvas) {
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+if (canvas) {
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*(){}[]<>/";
+  const charArray = chars.split("");
+  
+  // Adapter selon la taille d'écran
+  const isMobile = window.innerWidth <= 768;
+  const fontSize = isMobile ? 18 : 14; // Plus gros sur mobile = moins de caractères
+  const interval = isMobile ? 100 : 50; // Plus lent sur mobile
+  
+  const columns = canvas.width / fontSize;
+  const drops = Array(Math.floor(columns)).fill(1);
+  
+  function drawMatrix() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#0ee027";
+    ctx.font = fontSize + "px monospace";
     
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*(){}[]<>/";
-    const charArray = chars.split("");
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops = Array(Math.floor(columns)).fill(1);
-    
-    function drawMatrix() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#0ee027";
-      ctx.font = fontSize + "px monospace";
+    for (let i = 0; i < drops.length; i++) {
+      const char = charArray[Math.floor(Math.random() * charArray.length)];
+      ctx.fillText(char, i * fontSize, drops[i] * fontSize);
       
-      for (let i = 0; i < drops.length; i++) {
-        const char = charArray[Math.floor(Math.random() * charArray.length)];
-        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
-        
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i]++;
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
       }
+      drops[i]++;
     }
-    
-    setInterval(drawMatrix, 50);
+  }
+  
+  setInterval(drawMatrix, interval);
     
     // Resize canvas
     window.addEventListener("resize", () => {
