@@ -250,7 +250,7 @@ Version 2.0 (À venir)
  API REST pour les projets
 
 ### Licence
-Ce projet est sous licence MIT. Voir le fichier LICENSE pour plus de détails.
+Ce projet est sous licence MIT.
 ### Auteur
 Doko972
 
