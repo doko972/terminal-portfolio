@@ -40,7 +40,7 @@
 
             <!-- Lien retour accueil -->
             <div class="auth-footer">
-                <a href="{{ route('welcome') }}" class="back-link">← Retour à l'accueil</a>
+                <a href="{{ url('/') }}" class="back-link">← Retour à l'accueil</a>
             </div>
         </div>
     </div>

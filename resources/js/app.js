@@ -4,6 +4,8 @@ import Alpine from 'alpinejs';
 window.Alpine = Alpine;
 Alpine.start();
 
+import './portfolio';
+
 // ============================================
 // 1. MENU BURGER - TOGGLE & GESTION
 // ============================================
@@ -75,35 +77,40 @@ document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('load', () => {
   const canvas = document.getElementById("matrix-canvas");
   
-  if (canvas) {
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+if (canvas) {
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*(){}[]<>/";
+  const charArray = chars.split("");
+  
+  // Adapter selon la taille d'écran
+  const isMobile = window.innerWidth <= 768;
+  const fontSize = isMobile ? 18 : 14; // Plus gros sur mobile = moins de caractères
+  const interval = isMobile ? 100 : 50; // Plus lent sur mobile
+  
+  const columns = canvas.width / fontSize;
+  const drops = Array(Math.floor(columns)).fill(1);
+  
+  function drawMatrix() {
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#0ee027";
+    ctx.font = fontSize + "px monospace";
     
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*(){}[]<>/";
-    const charArray = chars.split("");
-    const fontSize = 14;
-    const columns = canvas.width / fontSize;
-    const drops = Array(Math.floor(columns)).fill(1);
-    
-    function drawMatrix() {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#0ee027";
-      ctx.font = fontSize + "px monospace";
+    for (let i = 0; i < drops.length; i++) {
+      const char = charArray[Math.floor(Math.random() * charArray.length)];
+      ctx.fillText(char, i * fontSize, drops[i] * fontSize);
       
-      for (let i = 0; i < drops.length; i++) {
-        const char = charArray[Math.floor(Math.random() * charArray.length)];
-        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
-        
-        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-          drops[i] = 0;
-        }
-        drops[i]++;
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
       }
+      drops[i]++;
     }
-    
-    setInterval(drawMatrix, 50);
+  }
+  
+  setInterval(drawMatrix, interval);
     
     // Resize canvas
     window.addEventListener("resize", () => {
@@ -198,3 +205,78 @@ document.addEventListener('DOMContentLoaded', () => {
   // Lancement de la progression
   setTimeout(step, 20);
 })();
+
+// Drag to scroll pour les tableaux
+document.addEventListener('DOMContentLoaded', function() {
+    const sliders = document.querySelectorAll('.terminal-table-wrapper');
+    
+    sliders.forEach(slider => {
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        slider.addEventListener('mousedown', (e) => {
+            isDown = true;
+            slider.style.cursor = 'grabbing';
+            startX = e.pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        });
+
+        slider.addEventListener('mouseleave', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+        });
+
+        slider.addEventListener('mouseup', () => {
+            isDown = false;
+            slider.style.cursor = 'grab';
+        });
+
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2; // Vitesse du scroll
+            slider.scrollLeft = scrollLeft - walk;
+        });
+
+        // Support tactile pour mobile
+        slider.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].pageX - slider.offsetLeft;
+            scrollLeft = slider.scrollLeft;
+        });
+
+        slider.addEventListener('touchmove', (e) => {
+            const x = e.touches[0].pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2;
+            slider.scrollLeft = scrollLeft - walk;
+        });
+    });
+});
+// Fonction toggle menu burger
+window.toggleMenu = function() {
+    const nav = document.getElementById('mainNav');
+    const toggle = document.getElementById('menuToggle');
+    
+    if (nav && toggle) {
+        nav.classList.toggle('active');
+        toggle.classList.toggle('active');
+    }
+};
+
+// Fermer le menu en cliquant sur un lien
+document.addEventListener('DOMContentLoaded', function() {
+    const navLinks = document.querySelectorAll('#mainNav a');
+    
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            const nav = document.getElementById('mainNav');
+            const toggle = document.getElementById('menuToggle');
+            
+            if (nav && toggle && nav.classList.contains('active')) {
+                nav.classList.remove('active');
+                toggle.classList.remove('active');
+            }
+        });
+    });
+});

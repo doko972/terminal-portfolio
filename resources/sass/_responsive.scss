@@ -140,10 +140,7 @@
 
 // Responsive Tablet
 @include tablet {
-  
-  .container {
-    padding: 0 $spacing-md;
-  }
+
   
   .skills-grid,
   .projects-grid {

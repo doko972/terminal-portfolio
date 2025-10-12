@@ -33,9 +33,15 @@
             </div>
 
             <pre class="boot-log" aria-live="polite">
-[ OK ] Initializing Neon Kernel v2025.1
-[ OK ] Loading drivers: web.sys, network.stack, auth.layer
-[ OK ] Spawning services: matrix.fx, halo.light, scan.vertical
+[ OK ] Secure Boot Chain Verified
+[ OK ] TPM 2.0 Active | Disk Encryption: ON
+[ OK ] Firewall + IDS/IPS Running
+[ OK ] Network: eth0 (1Gbps) | VPN: Connected
+[ OK ] SSH (port 22) | Key-based auth only
+[ OK ] Web Services: nginx + php-fpm + mysql
+[ OK ] SSL/TLS Certificates Valid
+[ OK ] Security Monitoring Active
+[ ✓ ] ACCESS GRANTED | All systems GREEN
             </pre>
 
             <div class="boot-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Chargement du système">

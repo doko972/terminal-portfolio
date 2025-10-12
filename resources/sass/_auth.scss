@@ -1,7 +1,6 @@
 @use 'variables' as *;
 @use 'mixins' as *;
 
-// Container principal pour les pages auth
 .auth-container {
   min-height: 100vh;
   @include flex-center;
