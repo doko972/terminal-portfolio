@@ -1,0 +1,86 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+footer {
+  border-top: $border-width solid $border-color;
+  padding: $spacing-lg $spacing-sm;
+  text-align: center;
+  @include box-glow($shadow-color);
+  margin-top: $spacing-xxl;
+}
+
+.footer-content {
+  max-width: $container-max-width;
+  margin: 0 auto;
+  
+  p {
+    margin-bottom: $spacing-sm;
+    opacity: 0.8;
+  }
+}
+
+// Liens sociaux
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: $spacing-md;
+  margin: $spacing-sm 0;
+  flex-wrap: wrap;
+  
+  a {
+    color: $text-color;
+    text-decoration: none;
+    padding: $spacing-xs $spacing-sm;
+    border: 1px solid $border-color;
+    @include transition(all);
+    
+    &:hover {
+      background-color: $primary-color;
+      color: $bg-color;
+      @include box-glow($primary-color, 20px);
+    }
+    
+    &::before {
+      content: "# ";
+      margin-right: 5px;
+    }
+  }
+}
+
+// Copyright
+.copyright {
+  margin-top: $spacing-md;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  
+  &::before {
+    content: "© ";
+  }
+}
+
+// Liens du footer (mentions légales, etc.)
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: $spacing-sm;
+  margin-top: $spacing-sm;
+  flex-wrap: wrap;
+  
+  a {
+    color: $text-color;
+    text-decoration: none;
+    font-size: 0.9rem;
+    opacity: 0.7;
+    @include transition(all);
+    
+    &:hover {
+      opacity: 1;
+      @include glow($primary-color, 10px);
+    }
+    
+    &:not(:last-child)::after {
+      content: " | ";
+      margin-left: $spacing-sm;
+      color: $primary-color;
+    }
+  }
+}

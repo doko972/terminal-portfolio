@@ -1,0 +1,39 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+.hero {
+  min-height: 80vh;
+  @include flex-center;
+  text-align: center;
+  padding: $spacing-xl $spacing-sm;
+}
+
+.hero-content {
+  h1 {
+    font-size: clamp(2rem, 5vw, 4rem);
+    margin-bottom: $spacing-sm;
+    @include glow($primary-color, 20px);
+    animation: flicker 3s infinite;
+  }
+  
+  p {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    margin-bottom: $spacing-md;
+    opacity: 0.9;
+  }
+}
+
+// Bouton CTA (Call To Action)
+.cta-button {
+  display: inline-block;
+  padding: 12px 30px;
+  border: $border-width solid $border-color;
+  color: $text-color;
+  text-decoration: none;
+  font-weight: $font-weight-normal;
+  background-color: transparent;
+  @include hover-neon;
+  
+  &:hover {
+    cursor: pointer;
+  }
+}

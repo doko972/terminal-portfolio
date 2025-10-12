@@ -1,0 +1,164 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+section {
+  padding: $spacing-xxl $spacing-sm;
+  border-top: 1px solid $shadow-color;
+}
+
+// Section À propos
+.about-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+// Grille de compétences
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: $spacing-md;
+  margin-top: $spacing-lg;
+}
+
+// Carte de compétence
+.skill-card {
+  @include bg-overlay(0.05);
+  @include terminal-border();
+  padding: 25px;
+  @include transition(all);
+  
+  &:hover {
+    transform: translateY(-5px);
+    @include box-glow($shadow-strong, 30px);
+    @include bg-overlay(0.1);
+  }
+  
+  h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    @include glow($primary-color);
+    
+    &::before {
+      content: "[✓] ";
+    }
+  }
+}
+
+// Liste de compétences
+.skill-list {
+  list-style: none;
+  padding-left: 0;
+  
+  li {
+    margin: $spacing-xs 0;
+    padding-left: $spacing-sm;
+    position: relative;
+    
+    &::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: $primary-color;
+    }
+  }
+}
+
+// Section projets
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: $spacing-md;
+  margin-top: $spacing-lg;
+}
+
+.project-card {
+  @include bg-overlay(0.05);
+  @include terminal-border();
+  padding: $spacing-md;
+  @include transition(all);
+  
+  &:hover {
+    transform: translateY(-5px);
+    @include box-glow($shadow-strong, 30px);
+  }
+  
+  h3 {
+    font-size: 1.2rem;
+    margin-bottom: $spacing-sm;
+    @include glow($primary-color);
+  }
+  
+  p {
+    margin-bottom: $spacing-sm;
+    font-size: 0.95rem;
+  }
+  
+  .project-link {
+    display: inline-block;
+    margin-top: $spacing-xs;
+    padding: 8px 16px;
+    border: 1px solid $border-color;
+    @include transition(all);
+    
+    &:hover {
+      background-color: $primary-color;
+      color: $bg-color;
+      @include box-glow($primary-color, 15px);
+    }
+  }
+}
+
+// Section contact
+.contact-form {
+  max-width: 600px;
+  margin: 0 auto;
+  
+  .form-group {
+    margin-bottom: $spacing-sm;
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      @include terminal-prefix("$ ");
+    }
+    
+    input,
+    textarea {
+      width: 100%;
+      padding: $spacing-xs $spacing-sm;
+      background-color: rgba(14, 224, 39, 0.05);
+      border: 1px solid $border-color;
+      color: $text-color;
+      font-family: $font-primary;
+      
+      &:focus {
+        @include box-glow($shadow-color, 15px);
+        outline: none;
+        border-color: $primary-color;
+      }
+    }
+    
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+  }
+  
+  button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: transparent;
+    border: $border-width solid $border-color;
+    color: $text-color;
+    font-family: $font-primary;
+    font-size: 1rem;
+    cursor: pointer;
+    @include transition(all);
+    
+    &:hover {
+      background-color: $primary-color;
+      color: $bg-color;
+      @include box-glow($primary-color, 30px);
+      transform: scale(1.02);
+    }
+  }
+}

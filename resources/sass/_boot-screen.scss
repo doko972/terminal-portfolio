@@ -1,0 +1,259 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// Variables locales pour le boot screen
+$neon-a: #00ff66;
+$neon-b: #0ee027;
+$screen-bg: #000;
+$boot-text: #0ee027;
+
+// Conteneur principal du boot screen
+#boot-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: $screen-bg;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: $boot-text;
+  font-family: $font-primary;
+}
+
+// Canvas Matrix en arrière-plan
+#boot-matrix {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.15;
+  z-index: 0;
+}
+
+// Wrapper du contenu
+.boot-wrap {
+  position: relative;
+  z-index: 1;
+  width: min(860px, 92vw);
+  border: 1px solid rgba(14, 224, 39, 0.5);
+  border-radius: 14px;
+  padding: 24px 22px;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.92),
+    rgba(0, 20, 0, 0.92)
+  );
+  box-shadow: 0 0 40px rgba(14, 224, 39, 0.25),
+    inset 0 0 20px rgba(14, 224, 39, 0.08);
+}
+
+// Header avec prompt et bouton skip
+.boot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  
+  .prompt {
+    font-weight: $font-weight-bold;
+    text-shadow: 0 0 12px $neon-b;
+  }
+}
+
+// Bouton Skip
+.boot-skip {
+  appearance: none;
+  border: 1px solid $neon-b;
+  background: transparent;
+  color: $boot-text;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  box-shadow: 0 0 12px rgba(14, 224, 39, 0.25);
+  @include transition(all);
+  
+  &:hover {
+    background: rgba(14, 224, 39, 0.08);
+  }
+}
+
+// Logo avec effet halo
+.boot-logo {
+  display: grid;
+  place-items: center;
+  margin: 12px auto 14px;
+  width: 160px;
+  height: 160px;
+  position: relative;
+}
+
+.logo-ring {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid $neon-b;
+  box-shadow: 0 0 28px rgba(14, 224, 39, 0.35),
+    inset 0 0 24px rgba(14, 224, 39, 0.18);
+  position: relative;
+  
+  &::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    background: radial-gradient(
+        closest-side,
+        rgba(14, 224, 39, 0.25),
+        transparent 60%
+      ),
+      conic-gradient(from 0deg, $neon-a, $neon-b);
+    mix-blend-mode: screen;
+    opacity: 0.35;
+    animation: ringScan 2.8s linear infinite;
+  }
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 6px rgba(14, 224, 39, 0.45));
+  }
+}
+
+// Animation du ring
+@keyframes ringScan {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.02);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+// Log de boot
+.boot-log {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(14, 224, 39, 0.25);
+  padding: 14px;
+  border-radius: 10px;
+  color: $boot-text;
+  opacity: 0.9;
+  white-space: pre-wrap;
+  min-height: 90px;
+  margin: 0 0 14px 0;
+  text-shadow: 0 0 8px rgba(14, 224, 39, 0.35);
+  font-size: 0.9rem;
+}
+
+// Barre de progression
+.boot-progress {
+  width: 100%;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(14, 224, 39, 0.08);
+  overflow: hidden;
+  border: 1px solid rgba(14, 224, 39, 0.35);
+  box-shadow: inset 0 0 18px rgba(14, 224, 39, 0.25);
+}
+
+.boot-bar {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, $neon-a, $neon-b);
+  box-shadow: 0 0 18px rgba(14, 224, 39, 0.65);
+  transition: width 0.25s ease;
+}
+
+// Footer avec message "ready"
+.boot-footer {
+  margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+  font-weight: $font-weight-bold;
+  
+  .ready {
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    text-shadow: 0 0 10px rgba(14, 224, 39, 0.6);
+  }
+}
+
+// ====== INTRO VIDEO SCREEN ======
+#intro-container {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: $screen-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 0.8s ease;
+  
+  &.fade-out {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+#intro-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+// Bouton Skip pour la vidéo
+.skip-btn {
+  position: absolute;
+  bottom: 50px;
+  right: 50px;
+  padding: 10px 20px;
+  font-family: $font-primary;
+  font-size: 1rem;
+  color: $primary-color;
+  border: 2px solid $primary-color;
+  background: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  text-transform: uppercase;
+  @include transition(all);
+  z-index: 10000;
+  
+  &:hover {
+    background: $primary-color;
+    color: $bg-color;
+    box-shadow: 0 0 15px $primary-color;
+  }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .logo-ring::after {
+    animation: none;
+    opacity: 0.2;
+  }
+}
+
+// Responsive mobile
+@include mobile {
+  .boot-wrap {
+    padding: 18px 16px;
+  }
+  
+  .boot-logo {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .skip-btn {
+    bottom: 30px;
+    right: 30px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+}

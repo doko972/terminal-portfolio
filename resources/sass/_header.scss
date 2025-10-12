@@ -1,0 +1,133 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+header {
+  padding: $spacing-sm 0;
+  border-bottom: $border-width solid $border-color;
+  @include box-glow($shadow-color);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+// Logo
+.logo {
+  font-size: 1.5rem;
+  font-weight: $font-weight-bold;
+  @include glow($primary-color);
+  
+  img {
+    height: 100px;
+    width: auto;
+  }
+}
+
+// Navigation principale
+nav {
+  ul {
+    display: flex;
+    list-style: none;
+    gap: $spacing-md;
+  }
+  
+  a {
+    color: $text-color;
+    text-decoration: none;
+    @include transition(all);
+    position: relative;
+    padding: 5px 0;
+    
+    &::before {
+      content: "$ ";
+    }
+    
+    &:hover {
+      @include glow($primary-color, 15px);
+    }
+    
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: $border-color;
+      @include transition(width);
+    }
+    
+    &:hover::after {
+      width: 100%;
+    }
+  }
+}
+
+// Menu burger (mobile)
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: $spacing-xs;
+  z-index: $z-burger;
+  position: relative;
+}
+
+.burger-icon {
+  width: 30px;
+  height: 20px;
+  position: relative;
+  transform: rotate(0deg);
+  @include transition(transform, 0.5s);
+  
+  span {
+    display: block;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background: $primary-color;
+    border-radius: 3px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    @include transition(all, 0.25s);
+    @include box-glow($shadow-strong, 8px);
+    
+    &:nth-child(1) {
+      top: 0px;
+    }
+    
+    &:nth-child(2) {
+      top: 9px;
+    }
+    
+    &:nth-child(3) {
+      top: 18px;
+    }
+  }
+}
+
+// Animation du burger en X
+.menu-toggle.active {
+  .burger-icon {
+    span:nth-child(1) {
+      top: 9px;
+      transform: rotate(135deg);
+    }
+    
+    span:nth-child(2) {
+      opacity: 0;
+      left: -60px;
+    }
+    
+    span:nth-child(3) {
+      top: 9px;
+      transform: rotate(-135deg);
+    }
+  }
+}

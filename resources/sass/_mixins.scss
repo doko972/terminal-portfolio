@@ -1,0 +1,73 @@
+@use 'variables' as *;
+
+@mixin glow($color: $primary-color, $intensity: 10px) {
+  text-shadow: 0 0 $intensity $color;
+}
+
+// Mixin pour les box-shadow avec effet néon
+@mixin box-glow($color: $shadow-color, $size: 20px) {
+  box-shadow: 0 0 $size $color;
+}
+
+// Mixin pour les bordures style terminal
+@mixin terminal-border($color: $border-color) {
+  border: $border-width solid $color;
+  @include box-glow($shadow-color);
+}
+
+// Mixin pour les transitions
+@mixin transition($property: all, $duration: $transition-speed, $timing: $transition-timing) {
+  transition: $property $duration $timing;
+}
+
+// Mixin pour le responsive
+@mixin mobile {
+  @media (max-width: $breakpoint-mobile) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: $breakpoint-tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: $breakpoint-desktop) {
+    @content;
+  }
+}
+
+// Mixin pour centrer flex
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Mixin pour le prefixe terminal
+@mixin terminal-prefix($content: "> ") {
+  &::before {
+    content: $content;
+    color: $primary-color;
+    margin-right: $spacing-xs;
+  }
+}
+
+// Mixin pour les effets hover néon
+@mixin hover-neon {
+  @include transition(all);
+  
+  &:hover {
+    background-color: $primary-color;
+    color: $bg-color;
+    @include box-glow($primary-color, 30px);
+    transform: scale(1.05);
+  }
+}
+
+// Mixin pour le background avec overlay
+@mixin bg-overlay($opacity: 0.05) {
+  background-color: rgba(14, 224, 39, $opacity);
+}

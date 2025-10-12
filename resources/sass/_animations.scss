@@ -1,0 +1,110 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+// Animation du curseur terminal clignotant
+@keyframes blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+// Animation flicker (scintillement) type écran CRT
+@keyframes flicker {
+  0%, 100% {
+    opacity: 1;
+  }
+  41.99% {
+    opacity: 1;
+  }
+  42% {
+    opacity: 0.8;
+  }
+  43% {
+    opacity: 1;
+  }
+  45.99% {
+    opacity: 1;
+  }
+  46% {
+    opacity: 0.7;
+  }
+  46.5% {
+    opacity: 1;
+  }
+}
+
+// Animation slide-in pour le menu mobile
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Animation fade-in
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Animation de pulsation pour les éléments importants
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+// Animation Matrix rain (pour utilisation future)
+@keyframes matrixRain {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+
+// Classes utilitaires d'animation
+.terminal-cursor {
+  display: inline-block;
+  width: 12px;
+  height: 30px;
+  background-color: $primary-color;
+  margin-left: 5px;
+  animation: blink 1s infinite;
+}
+
+.flicker-effect {
+  animation: flicker 3s infinite;
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.pulse-effect {
+  animation: pulse 2s ease-in-out infinite;
+}

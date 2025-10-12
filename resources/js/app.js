@@ -1,0 +1,200 @@
+import './bootstrap';
+import Alpine from 'alpinejs';
+
+window.Alpine = Alpine;
+Alpine.start();
+
+// ============================================
+// 1. MENU BURGER - TOGGLE & GESTION
+// ============================================
+function toggleMenu() {
+  const nav = document.getElementById("mainNav");
+  const overlay = document.getElementById("menuOverlay");
+  const menuToggle = document.getElementById("menuToggle");
+  
+  if (nav && overlay && menuToggle) {
+    nav.classList.toggle("active");
+    overlay.classList.toggle("active");
+    menuToggle.classList.toggle("active");
+    
+    // Empêcher le scroll quand le menu est ouvert
+    if (nav.classList.contains("active")) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }
+}
+
+// Rendre la fonction globale pour être utilisée dans le HTML
+window.toggleMenu = toggleMenu;
+
+// ============================================
+// 2. FERMER LE MENU AU CLIC SUR UN LIEN
+// ============================================
+document.addEventListener('DOMContentLoaded', () => {
+  
+  document.querySelectorAll("nav a").forEach((link) => {
+    link.addEventListener("click", () => {
+      const nav = document.getElementById("mainNav");
+      const overlay = document.getElementById("menuOverlay");
+      const menuToggle = document.getElementById("menuToggle");
+      
+      if (nav && overlay && menuToggle) {
+        nav.classList.remove("active");
+        overlay.classList.remove("active");
+        menuToggle.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+    });
+  });
+  
+  // ============================================
+  // 3. FERMER LE MENU AVEC LA TOUCHE ESCAPE
+  // ============================================
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+      const nav = document.getElementById("mainNav");
+      if (nav && nav.classList.contains("active")) {
+        toggleMenu();
+      }
+    }
+  });
+  
+  // Fermer le menu au clic sur l'overlay
+  const overlay = document.getElementById("menuOverlay");
+  if (overlay) {
+    overlay.addEventListener("click", toggleMenu);
+  }
+  
+});
+
+// ============================================
+// 4. ANIMATION MATRIX BACKGROUND
+// ============================================
+window.addEventListener('load', () => {
+  const canvas = document.getElementById("matrix-canvas");
+  
+  if (canvas) {
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*(){}[]<>/";
+    const charArray = chars.split("");
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+    
+    function drawMatrix() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#0ee027";
+      ctx.font = fontSize + "px monospace";
+      
+      for (let i = 0; i < drops.length; i++) {
+        const char = charArray[Math.floor(Math.random() * charArray.length)];
+        ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+        
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+    
+    setInterval(drawMatrix, 50);
+    
+    // Resize canvas
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  }
+});
+
+// ============================================
+// 5. SMOOTH SCROLL POUR LES ANCRES
+// ============================================
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
+      const href = this.getAttribute("href");
+      
+      // Ignorer les liens vides ou juste "#"
+      if (href === "#" || href === "") {
+        e.preventDefault();
+        return;
+      }
+      
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+  });
+});
+
+// ============================================
+// 6. ÉCRAN DE DÉMARRAGE (BOOT SCREEN)
+// ============================================
+(function() {
+  const overlay = document.getElementById('boot-screen');
+  const bar = document.querySelector('.boot-bar');
+  const progress = document.querySelector('.boot-progress');
+  const ready = document.querySelector('.boot-footer .ready');
+  const skipBtn = document.getElementById('boot-skip');
+  
+  if (!overlay || !bar) return;
+  
+  let autoCloseTimeout = null;
+  
+  // Simule une progression "crédible"
+  let p = 0;
+  const steps = [12, 28, 41, 57, 63, 74, 86, 93, 97, 100];
+  let i = 0;
+  
+  function step() {
+    if (i >= steps.length) return;
+    
+    p = steps[i++];
+    bar.style.width = p + '%';
+    if (progress) progress.setAttribute('aria-valuenow', p);
+    
+    if (p >= 100) {
+      // Quand la barre atteint 100%, afficher "system ready_"
+      if (ready) ready.style.opacity = 1;
+      
+      // Fermer automatiquement après 2 secondes
+      autoCloseTimeout = setTimeout(hideOverlay, 2000);
+    } else {
+      setTimeout(step, 200 + Math.random() * 450);
+    }
+  }
+  
+  function hideOverlay() {
+    // Annuler le timeout automatique s'il existe
+    if (autoCloseTimeout) {
+      clearTimeout(autoCloseTimeout);
+      autoCloseTimeout = null;
+    }
+    
+    overlay.style.transition = 'opacity .45s ease';
+    overlay.style.opacity = 0;
+    
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      overlay.setAttribute('aria-hidden', 'true');
+    }, 450);
+  }
+  
+  // Bouton Skip + Échap
+  if (skipBtn) skipBtn.addEventListener('click', hideOverlay);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') hideOverlay();
+  });
+  
+  // Lancement de la progression
+  setTimeout(step, 20);
+})();

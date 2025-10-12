@@ -1,0 +1,49 @@
+// @use 'mixins' as *;
+$primary-color: #0ee027;
+$bg-color: #000;
+$text-color: #0ee027;
+$border-color: #0ee027;
+
+// Couleurs secondaires
+$bg-overlay: rgba(14, 224, 39, 0.05);
+$bg-hover: rgba(14, 224, 39, 0.1);
+$shadow-color: rgba(14, 224, 39, 0.3);
+$shadow-strong: rgba(14, 224, 39, 0.4);
+
+// Typographie
+$font-primary: "Roboto Mono", monospace;
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+$line-height: 1.7;
+
+// Espacements
+$spacing-xs: 10px;
+$spacing-sm: 20px;
+$spacing-md: 30px;
+$spacing-lg: 40px;
+$spacing-xl: 60px;
+$spacing-xxl: 80px;
+
+// Tailles de conteneur
+$container-max-width: 1200px;
+
+// Bordures
+$border-width: 2px;
+$border-radius: 0; // Style terminal = pas de border-radius
+
+// Transitions
+$transition-speed: 0.3s;
+$transition-timing: ease;
+
+// Breakpoints responsive
+$breakpoint-mobile: 768px;
+$breakpoint-tablet: 1024px;
+$breakpoint-desktop: 1200px;
+
+// Z-index
+$z-canvas: 0;
+$z-content: 1;
+$z-overlay: 999;
+$z-nav-mobile: 1000;
+$z-burger: 1001;

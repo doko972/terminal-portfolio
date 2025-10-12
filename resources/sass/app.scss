@@ -1,0 +1,22 @@
+// IMPORTANT : Avec @use, il faut charger les variables et mixins en premier
+// et les rendre disponibles globalement avec "as *"
+
+// 1. Charger les variables en premier (disponibles globalement)
+@use 'variables' as *;
+
+// 2. Charger les mixins en second (disponibles globalement)
+@use 'mixins' as *;
+
+// 3. Charger les autres fichiers qui utilisent les variables et mixins
+// Pas besoin de "as *" pour ces fichiers car on ne les utilise pas directement
+@use 'animations';
+@use 'base';
+@use 'header';
+@use 'hero';
+@use 'sections';
+@use 'footer';
+@use 'boot-screen';
+@use 'responsive';
+
+// 4. Import de la police Google Fonts (doit être APRÈS tous les @use)
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap');
