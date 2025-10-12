@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,11 +11,13 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
+
 <body class="admin-body">
     <!-- Animation Matrix en arrière-plan -->
     <canvas id="matrix-bg"></canvas>
@@ -36,6 +39,22 @@
             {{ $slot }}
         </main>
     </div>
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <h3 class="section-title">Contact</h3>
+            <div class="social-links">
+                <a href="mailto:contact@example.com">Email</a>
+                <a href="#" target="_blank">GitHub</a>
+                <a href="#" target="_blank">LinkedIn</a>
+                <a href="#" target="_blank">Portfolio</a>
+            </div>
+            <p style="margin-top: 30px; opacity: 0.7">
+                © {{ date('Y') }} Terminal Portfolio | Développé avec passion
+            </p>
+            <p style="opacity: 0.5; font-size: 0.9rem">user@terminal:~$</p>
+        </div>
+    </footer>
 
     <!-- Script Matrix -->
     <script>
@@ -82,4 +101,5 @@
         });
     </script>
 </body>
+
 </html>
