@@ -76,7 +76,7 @@ npm install
 cp .env.example .env
 
 
-APP_NAME="Portfolio Terminal"
+APP_NAME="PortfolioTerminal"
 APP_ENV=local
 APP_DEBUG=true
 APP_URL=http://localhost:8000
