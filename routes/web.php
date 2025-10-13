@@ -50,4 +50,15 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
         ->name('experiences.reorder');
 });
 
+// Routes publiques
+Route::get('/', function () {
+    return view('welcome');
+})->name('home');
+
+// Route Timeline / Parcours
+Route::get('/parcours', [App\Http\Controllers\TimelineController::class, 'index'])->name('timeline');
+
+// Ou si vous voulez l'intégrer dans une page "À propos"
+// Route::get('/about', [App\Http\Controllers\AboutController::class, 'index'])->name('about');
+
 require __DIR__.'/auth.php';
