@@ -1,8 +1,3 @@
-// ==========================================
-// PORTFOLIO - Modal et Filtres
-// ==========================================
-
-// Récupérer les données des projets
 window.projectsData = {};
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -11,9 +6,10 @@ document.addEventListener('DOMContentLoaded', function () {
         window.projectsData = JSON.parse(portfolioSection.dataset.projects);
     }
 });
+// ==========================================
+// Fonction pour ouvrir le modal avec les détails du projet
+// ==========================================
 
-// Fonction pour ouvrir le modal avec les détails du projet
-// Fonction pour ouvrir le modal avec les détails du projet
 window.openProjectModal = function (projectId) {
     const project = window.projectsData[projectId];
     if (!project) return;
@@ -109,8 +105,10 @@ window.openProjectModal = function (projectId) {
         </div>
         ` : ''}
     `;
+// ==========================================
+// Stocker les images pour la navigation
+// ==========================================
 
-    // Stocker les images pour la navigation
     window.currentGalleryImages = images;
     window.currentImageIndex = 0;
 
@@ -118,8 +116,9 @@ window.openProjectModal = function (projectId) {
     document.getElementById('projectModal').classList.add('active');
     document.body.style.overflow = 'hidden';
 };
-
+// ==========================================
 // Fonction pour changer d'image dans le carrousel
+// ==========================================
 window.changeGalleryImage = function (direction) {
     if (!window.currentGalleryImages || window.currentGalleryImages.length <= 1) return;
 
@@ -134,14 +133,16 @@ window.changeGalleryImage = function (direction) {
 
     updateGalleryDisplay();
 };
-
+// ==========================================
 // Fonction pour sélectionner une image via les miniatures
+// ==========================================
 window.selectGalleryImage = function (index) {
     window.currentImageIndex = index;
     updateGalleryDisplay();
 };
-
+// ==========================================
 // Fonction pour mettre à jour l'affichage de la galerie
+// ==========================================
 function updateGalleryDisplay() {
     const mainImage = document.getElementById('mainGalleryImage');
     const counter = document.getElementById('currentImageIndex');
@@ -161,14 +162,16 @@ function updateGalleryDisplay() {
         });
     }
 }
-
+// ==========================================
 // Fonction pour fermer le modal
+// ==========================================
 window.closeProjectModal = function () {
     document.getElementById('projectModal').classList.remove('active');
     document.body.style.overflow = 'auto';
 };
-
+// ==========================================
 // Fermer le modal avec la touche Échap et naviguer avec les flèches
+// ==========================================
 document.addEventListener('keydown', function (e) {
     const modal = document.getElementById('projectModal');
 
@@ -185,13 +188,14 @@ document.addEventListener('keydown', function (e) {
         }
     }
 });
-
+// ==========================================
 // Filtres par technologies
+// ==========================================
 document.addEventListener('DOMContentLoaded', function () {
     const filterButtons = document.querySelectorAll('.filter-btn');
     const projectCards = document.querySelectorAll('.projects-grid .project-card');
 
-    if (filterButtons.length === 0) return; // Pas de filtres sur cette page
+    if (filterButtons.length === 0) return;
 
     filterButtons.forEach(button => {
         button.addEventListener('click', function () {
@@ -235,7 +239,6 @@ document.addEventListener('DOMContentLoaded', function () {
 window.openLightbox = function (imageIndex = null) {
     if (!window.currentGalleryImages || window.currentGalleryImages.length === 0) return;
 
-    // Si un index est fourni, l'utiliser, sinon utiliser l'index courant
     if (imageIndex !== null) {
         window.currentImageIndex = imageIndex;
     }

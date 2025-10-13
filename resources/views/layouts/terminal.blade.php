@@ -10,7 +10,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
     
-    <!-- Styles avec Vite -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body>

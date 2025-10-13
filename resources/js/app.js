@@ -28,7 +28,7 @@ function toggleMenu() {
   }
 }
 
-// Rendre la fonction globale pour être utilisée dans le HTML
+// Rendre la fonction globale
 window.toggleMenu = toggleMenu;
 
 // ============================================
@@ -87,8 +87,8 @@ if (canvas) {
   
   // Adapter selon la taille d'écran
   const isMobile = window.innerWidth <= 768;
-  const fontSize = isMobile ? 18 : 14; // Plus gros sur mobile = moins de caractères
-  const interval = isMobile ? 100 : 50; // Plus lent sur mobile
+  const fontSize = isMobile ? 18 : 14;
+  const interval = isMobile ? 100 : 50;
   
   const columns = canvas.width / fontSize;
   const drops = Array(Math.floor(columns)).fill(1);
