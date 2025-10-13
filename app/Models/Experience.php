@@ -84,7 +84,7 @@ class Experience extends Model
             return 'Durée non spécifiée';
         }
 
-        $diff = $this->start_date->diff($end);
+        $diff = \Carbon\Carbon::parse($this->start_date)->diff(\Carbon\Carbon::parse($end));
         
         $years = $diff->y;
         $months = $diff->m;
@@ -108,14 +108,14 @@ class Experience extends Model
     public function getPeriodAttribute()
     {
         // Format court : Jan 2023
-        $start = $this->start_date->format('M Y');
+        $start = \Carbon\Carbon::parse($this->start_date)->format('M Y');
         
         if ($this->is_current) {
             return $start . ' - Aujourd\'hui';
         }
         
         if ($this->end_date) {
-            $end = $this->end_date->format('M Y');
+            $end = \Carbon\Carbon::parse($this->end_date)->format('M Y');
             return $start . ' - ' . $end;
         }
         
@@ -133,8 +133,8 @@ class Experience extends Model
             9 => 'Sep', 10 => 'Oct', 11 => 'Nov', 12 => 'Déc'
         ];
         
-        $startMonth = $months[$this->start_date->month];
-        $startYear = $this->start_date->year;
+        $startMonth = $months[\Carbon\Carbon::parse($this->start_date)->month];
+        $startYear = \Carbon\Carbon::parse($this->start_date)->year;
         $start = "$startMonth $startYear";
         
         if ($this->is_current) {
@@ -142,8 +142,8 @@ class Experience extends Model
         }
         
         if ($this->end_date) {
-            $endMonth = $months[$this->end_date->month];
-            $endYear = $this->end_date->year;
+            $endMonth = $months[\Carbon\Carbon::parse($this->end_date)->month];
+            $endYear = \Carbon\Carbon::parse($this->end_date)->year;
             $end = "$endMonth $endYear";
             return $start . ' - ' . $end;
         }
