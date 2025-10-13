@@ -1,0 +1,408 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.experience-logo {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 4px;
+    border: 1px solid rgba(14, 224, 39, 0.2);
+    padding: 4px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.experience-logo-placeholder {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    border: 1px solid rgba(14, 224, 39, 0.2);
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Filtres par type */
+.filter-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border: 1px solid rgba(14, 224, 39, 0.3);
+    border-radius: 4px;
+    font-size: 14px;
+    color: #0ee027;
+    text-decoration: none;
+    transition: all 0.3s;
+    background: transparent;
+}
+
+.filter-badge:hover {
+    background: rgba(14, 224, 39, 0.1);
+    border-color: #0ee027;
+}
+
+.filter-badge.active {
+    background: #0ee027;
+    color: #000;
+    font-weight: 600;
+}
+
+/* Type badges */
+.type-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.type-badge.type-work {
+    background: rgba(14, 224, 39, 0.15);
+    color: #0ee027;
+    border: 1px solid rgba(14, 224, 39, 0.3);
+}
+
+.type-badge.type-education {
+    background: rgba(59, 130, 246, 0.15);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.type-badge.type-certification {
+    background: rgba(234, 179, 8, 0.15);
+    color: #eab308;
+    border: 1px solid rgba(234, 179, 8, 0.3);
+}
+
+/* Badge "En cours" */
+.badge-current {
+    display: inline-block;
+    padding: 2px 8px;
+    background: rgba(14, 224, 39, 0.2);
+    color: #0ee027;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-top: 4px;
+    text-transform: uppercase;
+}
+
+/* Status badges */
+.status-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-badge.status-active {
+    background: rgba(14, 224, 39, 0.2);
+    color: #0ee027;
+    border: 1px solid rgba(14, 224, 39, 0.3);
+}
+
+.status-badge.status-inactive {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Terminal link */
+.terminal-link {
+    color: #0ee027;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.terminal-link:hover {
+    text-shadow: 0 0 10px #0ee027;
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .experience-logo,
+    .experience-logo-placeholder {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    
+    .filter-badge {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+}
+/* ====================================
+   ADMIN - Expériences Form Styles
+   ==================================== */
+
+.experience-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* Form group */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Form row (2 colonnes) */
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Labels */
+.form-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #0ee027;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.form-label.required::after {
+    content: "*";
+    color: #ef4444;
+    margin-left: 4px;
+}
+
+/* Inputs */
+.form-input {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(14, 224, 39, 0.3);
+    border-radius: 4px;
+    color: #0ee027;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #0ee027;
+    box-shadow: 0 0 15px rgba(14, 224, 39, 0.2);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.form-input::placeholder {
+    color: rgba(14, 224, 39, 0.4);
+}
+
+.form-input.error {
+    border-color: #ef4444;
+}
+
+/* Select */
+select.form-input {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%230ee027' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 40px;
+}
+
+select.form-input option {
+    background-color: #000;
+    color: #0ee027;
+}
+
+/* Textarea */
+textarea.form-input {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.6;
+}
+
+/* File input */
+.form-input-file {
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 2px dashed rgba(14, 224, 39, 0.3);
+    border-radius: 4px;
+    color: #0ee027;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.form-input-file:hover {
+    border-color: #0ee027;
+    background-color: rgba(14, 224, 39, 0.05);
+}
+
+.form-input-file:focus {
+    outline: none;
+    border-color: #0ee027;
+    box-shadow: 0 0 15px rgba(14, 224, 39, 0.2);
+}
+
+/* Image preview */
+.image-preview {
+    margin-top: 12px;
+    display: none;
+}
+
+.image-preview.active {
+    display: block;
+}
+
+.image-preview img {
+    max-width: 200px;
+    max-height: 200px;
+    border: 2px solid rgba(14, 224, 39, 0.3);
+    border-radius: 4px;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Checkbox */
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    color: #0ee027;
+    font-size: 14px;
+    user-select: none;
+}
+
+.checkbox-input {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #0ee027;
+}
+
+/* Form hint */
+.form-hint {
+    font-size: 12px;
+    color: rgba(14, 224, 39, 0.6);
+    font-style: italic;
+    margin-top: 4px;
+}
+
+/* Error message */
+.error-message {
+    color: #ef4444;
+    font-size: 12px;
+    margin-top: 4px;
+    display: block;
+}
+
+/* Form actions */
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(14, 224, 39, 0.2);
+}
+
+@media (max-width: 768px) {
+    .form-actions {
+        flex-direction: column;
+    }
+}
+
+/* Buttons */
+.terminal-btn {
+    padding: 12px 24px;
+    border: 2px solid #0ee027;
+    border-radius: 4px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.terminal-btn.primary {
+    background-color: #0ee027;
+    color: #000;
+    font-weight: 600;
+}
+
+.terminal-btn.primary:hover {
+    background-color: #0cc021;
+    box-shadow: 0 0 20px rgba(14, 224, 39, 0.4);
+    transform: translateY(-2px);
+}
+
+.terminal-btn.secondary {
+    background-color: transparent;
+    color: #0ee027;
+}
+
+.terminal-btn.secondary:hover {
+    background-color: rgba(14, 224, 39, 0.1);
+    box-shadow: 0 0 15px rgba(14, 224, 39, 0.2);
+}
+
+/* Terminal link */
+.terminal-link {
+    color: #0ee027;
+    text-decoration: none;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.3s;
+}
+
+.terminal-link:hover {
+    text-shadow: 0 0 10px #0ee027;
+}
+
+/* Prompt style */
+.prompt {
+    font-weight: 700;
+    color: #0ee027;
+}
+/* ====================================
+   ADMIN - Expériences Edit - Logo actuel
+   ==================================== */
+
+.current-logo {
+    margin-bottom: 16px;
+    padding: 16px;
+    background: rgba(14, 224, 39, 0.05);
+    border: 1px solid rgba(14, 224, 39, 0.2);
+    border-radius: 4px;
+}
+
+.current-logo-img {
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: contain;
+    border: 2px solid rgba(14, 224, 39, 0.3);
+    border-radius: 4px;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.current-logo p {
+    color: rgba(14, 224, 39, 0.8);
+    margin: 0;
+}

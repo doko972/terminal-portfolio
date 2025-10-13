@@ -37,4 +37,17 @@ Route::get('/api/project/{id}', function($id) {
 Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [App\Http\Controllers\ContactController::class, 'send'])->name('contact.send');
 
+// Routes Admin - Expériences professionnelles
+Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+    
+    // Dashboard et autres routes admin existantes...
+    
+    // CRUD Expériences
+    Route::resource('experiences', App\Http\Controllers\Admin\ExperienceController::class);
+    
+    // Route pour réordonner les expériences (drag & drop futur)
+    Route::post('experiences/reorder', [App\Http\Controllers\Admin\ExperienceController::class, 'reorder'])
+        ->name('experiences.reorder');
+});
+
 require __DIR__.'/auth.php';
