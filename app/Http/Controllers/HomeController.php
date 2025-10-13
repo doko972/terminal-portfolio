@@ -9,8 +9,9 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // Récupérer tous les projets terminés, triés par ordre et featured en premier
+        // Récupérer tous les projets terminés avec leurs images, triés par ordre et featured en premier
         $projects = Project::where('status', 'termine')
+            ->with('images')
             ->ordered()
             ->get();
 
