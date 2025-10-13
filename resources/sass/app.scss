@@ -25,6 +25,8 @@
 @use 'portfolio';
 @use 'terminal';
 @use 'contact';
+@use 'experiences';
+@use 'timeline';
 
 // 4. Import de la police Google Fonts (doit être APRÈS tous les @use)
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap');

@@ -5,6 +5,8 @@ window.Alpine = Alpine;
 Alpine.start();
 
 import './portfolio';
+import './experiences_form'
+import './timeline';
 
 // ============================================
 // 1. MENU BURGER - TOGGLE & GESTION
