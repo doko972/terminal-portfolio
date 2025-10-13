@@ -75,23 +75,23 @@
         </section>
 
         <!-- Section Portfolio -->
-        <section id="portfolio" class="section" data-projects='@json($projects->keyBy("id"))'>
+        {{-- <section id="portfolio" class="section" data-projects='@json($projects->keyBy("id"))'>
             <div class="container">
                 <h2 class="section-title">
                     <span class="prompt">root@portfolio:~$</span> ls projects/
                 </h2>
 
                 <!-- Projets mis en avant -->
-                @if($featuredProjects->isNotEmpty())
+                @if ($featuredProjects->isNotEmpty())
                     <div class="featured-projects-wrapper">
                         <h3 class="subsection-title">
                             <span class="star">★</span> Projets mis en avant
                         </h3>
                         <div class="featured-projects">
-                            @foreach($featuredProjects as $project)
+                            @foreach ($featuredProjects as $project)
                                 <div class="project-card featured" data-project-id="{{ $project->id }}">
                                     <div class="project-image">
-                                        @if($project->image)
+                                        @if ($project->image)
                                             <img src="{{ Storage::url($project->image) }}" alt="{{ $project->title }}">
                                         @else
                                             <div class="project-image-placeholder">
@@ -111,24 +111,24 @@
                                         </div>
                                         <p class="project-description">{{ Str::limit($project->description, 100) }}</p>
                                         <div class="project-technologies">
-                                            @foreach($project->technologies_array as $tech)
+                                            @foreach ($project->technologies_array as $tech)
                                                 <span class="tech-badge">{{ $tech }}</span>
                                             @endforeach
                                         </div>
                                         <div class="project-footer">
-                                            @if($project->completed_at)
+                                            @if ($project->completed_at)
                                                 <span class="project-date">
                                                     <span class="prompt">📅</span> {{ $project->completed_at->format('Y') }}
                                                 </span>
                                             @endif
                                             <div class="project-links">
-                                                @if($project->url)
+                                                @if ($project->url)
                                                     <a href="{{ $project->url }}" target="_blank" class="project-link"
                                                         title="Voir le site">
                                                         <span class="prompt">🌐</span>
                                                     </a>
                                                 @endif
-                                                @if($project->github_url)
+                                                @if ($project->github_url)
                                                     <a href="{{ $project->github_url }}" target="_blank" class="project-link"
                                                         title="Voir sur GitHub">
                                                         <span class="prompt">💻</span>
@@ -144,7 +144,7 @@
                 @endif
 
                 <!-- Filtres par technologies -->
-                @if($allTechnologies->isNotEmpty())
+                @if ($allTechnologies->isNotEmpty())
                     <div class="filters-wrapper">
                         <div class="filters-header">
                             <span class="prompt">></span> Filtrer par technologie :
@@ -153,7 +153,7 @@
                             <button class="filter-btn active" data-filter="all">
                                 Tous les projets
                             </button>
-                            @foreach($allTechnologies as $tech)
+                            @foreach ($allTechnologies as $tech)
                                 <button class="filter-btn" data-filter="{{ strtolower($tech) }}">
                                     {{ $tech }}
                                 </button>
@@ -164,11 +164,11 @@
 
                 <!-- Tous les projets -->
                 <div class="projects-grid">
-                    @foreach($projects->where('is_featured', false) as $project)
+                    @foreach ($projects->where('is_featured', false) as $project)
                         <div class="project-card" data-project-id="{{ $project->id }}"
                             data-technologies="{{ strtolower(implode(' ', $project->technologies_array)) }}">
                             <div class="project-image">
-                                @if($project->image)
+                                @if ($project->image)
                                     <img src="{{ Storage::url($project->image) }}" alt="{{ $project->title }}">
                                 @else
                                     <div class="project-image-placeholder">
@@ -185,23 +185,23 @@
                                 <h3 class="project-title">{{ $project->title }}</h3>
                                 <p class="project-description">{{ Str::limit($project->description, 100) }}</p>
                                 <div class="project-technologies">
-                                    @foreach($project->technologies_array as $tech)
+                                    @foreach ($project->technologies_array as $tech)
                                         <span class="tech-badge">{{ $tech }}</span>
                                     @endforeach
                                 </div>
                                 <div class="project-footer">
-                                    @if($project->completed_at)
+                                    @if ($project->completed_at)
                                         <span class="project-date">
                                             <span class="prompt">📅</span> {{ $project->completed_at->format('Y') }}
                                         </span>
                                     @endif
                                     <div class="project-links">
-                                        @if($project->url)
+                                        @if ($project->url)
                                             <a href="{{ $project->url }}" target="_blank" class="project-link" title="Voir le site">
                                                 <span class="prompt">🌐</span>
                                             </a>
                                         @endif
-                                        @if($project->github_url)
+                                        @if ($project->github_url)
                                             <a href="{{ $project->github_url }}" target="_blank" class="project-link"
                                                 title="Voir sur GitHub">
                                                 <span class="prompt">💻</span>
@@ -214,7 +214,173 @@
                     @endforeach
                 </div>
 
-                @if($projects->isEmpty())
+                @if ($projects->isEmpty())
+                    <div class="no-projects">
+                        <p><span class="prompt">!</span> Aucun projet disponible pour le moment.</p>
+                    </div>
+                @endif
+            </div>
+        </section> --}}
+        <!-- Section Portfolio -->
+        <section id="portfolio" class="section" data-projects='@json($projects->keyBy('id'))'>
+            <div class="container">
+                <h2 class="section-title">
+                    <span class="prompt">root@portfolio:~$</span> ls projects/
+                </h2>
+
+                <!-- Projets mis en avant -->
+                @if ($featuredProjects->isNotEmpty())
+                    <div class="featured-projects-wrapper">
+                        <h3 class="subsection-title">
+                            <span class="star">★</span> Projets mis en avant
+                        </h3>
+                        <div class="featured-projects">
+                            @foreach ($featuredProjects as $project)
+                                @php
+                                    $mainImage = $project->images
+                                        ? $project->images->where('is_main', true)->first()
+                                        : null;
+                                @endphp
+                                <div class="project-card featured" data-project-id="{{ $project->id }}">
+                                    <div class="project-image">
+                                        @if ($mainImage)
+                                            <img src="{{ Storage::url($mainImage->image_path) }}"
+                                                alt="{{ $project->title }}">
+                                        @elseif($project->image)
+                                            {{-- Fallback sur l'ancienne colonne image --}}
+                                            <img src="{{ Storage::url($project->image) }}" alt="{{ $project->title }}">
+                                        @else
+                                            <div class="project-image-placeholder">
+                                                <span>{{ strtoupper(substr($project->title, 0, 2)) }}</span>
+                                            </div>
+                                        @endif
+                                        <div class="project-overlay">
+                                            <button class="btn-view-details" data-project-id="{{ $project->id }}"
+                                                onclick="openProjectModal(this.dataset.projectId)">
+                                                <span class="prompt">></span> Voir les détails
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="project-content">
+                                        <div class="project-header">
+                                            <h3 class="project-title">{{ $project->title }}</h3>
+                                            <span class="featured-badge">★</span>
+                                        </div>
+                                        <p class="project-description">{{ Str::limit($project->description, 100) }}</p>
+                                        <div class="project-technologies">
+                                            @foreach ($project->technologies_array as $tech)
+                                                <span class="tech-badge">{{ $tech }}</span>
+                                            @endforeach
+                                        </div>
+                                        <div class="project-footer">
+                                            @if ($project->completed_at)
+                                                <span class="project-date">
+                                                    <span class="prompt">📅</span>
+                                                    {{ $project->completed_at->format('Y') }}
+                                                </span>
+                                            @endif
+                                            <div class="project-links">
+                                                @if ($project->url)
+                                                    <a href="{{ $project->url }}" target="_blank" class="project-link"
+                                                        title="Voir le site">
+                                                        <span class="prompt">🌐</span>
+                                                    </a>
+                                                @endif
+                                                @if ($project->github_url)
+                                                    <a href="{{ $project->github_url }}" target="_blank"
+                                                        class="project-link" title="Voir sur GitHub">
+                                                        <span class="prompt">💻</span>
+                                                    </a>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+
+                <!-- Filtres par technologies -->
+                @if ($allTechnologies->isNotEmpty())
+                    <div class="filters-wrapper">
+                        <div class="filters-header">
+                            <span class="prompt">></span> Filtrer par technologie :
+                        </div>
+                        <div class="filters">
+                            <button class="filter-btn active" data-filter="all">
+                                Tous les projets
+                            </button>
+                            @foreach ($allTechnologies as $tech)
+                                <button class="filter-btn" data-filter="{{ strtolower($tech) }}">
+                                    {{ $tech }}
+                                </button>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+
+                <!-- Tous les projets -->
+                <div class="projects-grid">
+                    @foreach ($projects->where('is_featured', false) as $project)
+                        @php
+                            $mainImage = $project->images ? $project->images->where('is_main', true)->first() : null;
+                        @endphp
+                        <div class="project-card" data-project-id="{{ $project->id }}"
+                            data-technologies="{{ strtolower(implode(' ', $project->technologies_array)) }}">
+                            <div class="project-image">
+                                @if ($mainImage)
+                                    <img src="{{ Storage::url($mainImage->image_path) }}" alt="{{ $project->title }}">
+                                @elseif($project->image)
+                                    {{-- Fallback sur l'ancienne colonne image --}}
+                                    <img src="{{ Storage::url($project->image) }}" alt="{{ $project->title }}">
+                                @else
+                                    <div class="project-image-placeholder">
+                                        <span>{{ strtoupper(substr($project->title, 0, 2)) }}</span>
+                                    </div>
+                                @endif
+                                <div class="project-overlay">
+                                    <button class="btn-view-details" data-project-id="{{ $project->id }}"
+                                        onclick="openProjectModal(this.dataset.projectId)">
+                                        <span class="prompt">></span> Voir les détails
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="project-content">
+                                <h3 class="project-title">{{ $project->title }}</h3>
+                                <p class="project-description">{{ Str::limit($project->description, 100) }}</p>
+                                <div class="project-technologies">
+                                    @foreach ($project->technologies_array as $tech)
+                                        <span class="tech-badge">{{ $tech }}</span>
+                                    @endforeach
+                                </div>
+                                <div class="project-footer">
+                                    @if ($project->completed_at)
+                                        <span class="project-date">
+                                            <span class="prompt">📅</span> {{ $project->completed_at->format('Y') }}
+                                        </span>
+                                    @endif
+                                    <div class="project-links">
+                                        @if ($project->url)
+                                            <a href="{{ $project->url }}" target="_blank" class="project-link"
+                                                title="Voir le site">
+                                                <span class="prompt">🌐</span>
+                                            </a>
+                                        @endif
+                                        @if ($project->github_url)
+                                            <a href="{{ $project->github_url }}" target="_blank" class="project-link"
+                                                title="Voir sur GitHub">
+                                                <span class="prompt">💻</span>
+                                            </a>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                @if ($projects->isEmpty())
                     <div class="no-projects">
                         <p><span class="prompt">!</span> Aucun projet disponible pour le moment.</p>
                     </div>
@@ -230,8 +396,18 @@
                     <span>✕</span>
                 </button>
                 <div id="modalProjectContent">
-                    <!-- Le contenu sera injecté dynamiquement par JavaScript -->
+                    <!-- Contenu Injecté dynamiquement -->
                 </div>
+            </div>
+        </div>
+        <!-- Lightbox plein écran -->
+        <div id="imageLightbox" class="image-lightbox">
+            <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+            <button class="lightbox-nav lightbox-prev" onclick="navigateLightbox(-1)">‹</button>
+            <button class="lightbox-nav lightbox-next" onclick="navigateLightbox(1)">›</button>
+            <img id="lightboxImage" src="" alt="Image en grand">
+            <div class="lightbox-counter">
+                <span id="lightboxImageIndex">1</span> / <span id="lightboxImageTotal">1</span>
             </div>
         </div>
 

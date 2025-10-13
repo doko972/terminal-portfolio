@@ -280,3 +280,64 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+// ==========================================
+// PRÉVISUALISATION MULTI-IMAGES
+// ==========================================
+
+let selectedFiles = [];
+
+window.previewImages = function(event) {
+    const files = Array.from(event.target.files);
+    const previewContainer = document.getElementById('imagesPreview');
+    
+    // Ajouter les nouveaux fichiers
+    selectedFiles = [...selectedFiles, ...files];
+    
+    // Limiter à 10 images
+    if (selectedFiles.length > 10) {
+        alert('Vous ne pouvez uploader que 10 images maximum.');
+        selectedFiles = selectedFiles.slice(0, 10);
+    }
+    
+    // Vider le conteneur
+    previewContainer.innerHTML = '';
+    
+    // Créer les prévisualisations
+    selectedFiles.forEach((file, index) => {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            const div = document.createElement('div');
+            div.className = 'preview-image-item';
+            div.innerHTML = `
+                <img src="${e.target.result}" alt="Preview ${index + 1}">
+                <button type="button" class="preview-remove" onclick="removePreviewImage(${index})" title="Supprimer">
+                    ✕
+                </button>
+                ${index === 0 ? '<span class="main-badge">★ Principale</span>' : ''}
+            `;
+            previewContainer.appendChild(div);
+        };
+        
+        reader.readAsDataURL(file);
+    });
+    
+    // Mettre à jour l'input file
+    updateFileInput(event.target);
+};
+
+window.removePreviewImage = function(index) {
+    selectedFiles.splice(index, 1);
+    
+    const fileInput = document.getElementById('images');
+    updateFileInput(fileInput);
+    
+    // Re-déclencher la prévisualisation
+    window.previewImages({ target: fileInput });
+};
+
+function updateFileInput(input) {
+    const dataTransfer = new DataTransfer();
+    selectedFiles.forEach(file => dataTransfer.items.add(file));
+    input.files = dataTransfer.files;
+}

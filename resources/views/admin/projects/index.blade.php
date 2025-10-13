@@ -10,7 +10,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            @if(session('success'))
+            @if (session('success'))
                 <div class="terminal-alert success mb-6">
                     <span class="prompt">[OK]</span> {{ session('success') }}
                 </div>
@@ -26,7 +26,7 @@
                     </a>
                 </div>
 
-                @if($projects->isEmpty())
+                @if ($projects->isEmpty())
                     <div class="terminal-empty">
                         <p><span class="prompt">!</span> Aucun projet trouvé</p>
                         <p class="text-sm mt-2 opacity-70">Créez votre premier projet pour commencer</p>
@@ -49,12 +49,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($projects as $project)
+                                @foreach ($projects as $project)
                                     <tr>
                                         <td>
-                                            @if($project->image)
-                                                <img src="{{ Storage::url($project->image) }}" alt="{{ $project->title }}"
-                                                    class="project-thumbnail">
+                                            @php
+                                                $mainImage = $project->images
+                                                    ? $project->images->where('is_main', true)->first()
+                                                    : null;
+
+                                                if (!$mainImage && $project->image) {
+                                                    $hasOldImage = true;
+                                                } else {
+                                                    $hasOldImage = false;
+                                                }
+                                            @endphp
+
+                                            @if ($mainImage)
+                                                <img src="{{ Storage::url($mainImage->image_path) }}"
+                                                    alt="{{ $project->title }}" class="project-thumbnail">
+                                                @if ($project->images->count() > 1)
+                                                    <span
+                                                        class="images-count-badge">+{{ $project->images->count() - 1 }}</span>
+                                                @endif
+                                            @elseif($hasOldImage)
+                                                {{-- Afficher l'ancienne image si elle existe --}}
+                                                <img src="{{ Storage::url($project->image) }}"
+                                                    alt="{{ $project->title }}" class="project-thumbnail">
                                             @else
                                                 <div class="project-thumbnail-placeholder">
                                                     <span>?</span>
@@ -64,21 +84,23 @@
                                         <td>
                                             <div class="project-title">
                                                 {{ $project->title }}
-                                                @if($project->is_featured)
+                                                @if ($project->is_featured)
                                                     <span class="badge-featured">★</span>
                                                 @endif
                                             </div>
-                                            @if($project->completed_at)
-                                                <small class="opacity-70">{{ $project->completed_at->format('Y') }}</small>
+                                            @if ($project->completed_at)
+                                                <small
+                                                    class="opacity-70">{{ $project->completed_at->format('Y') }}</small>
                                             @endif
                                         </td>
                                         <td>
                                             <div class="tech-tags">
-                                                @foreach(array_slice($project->technologies_array, 0, 3) as $tech)
+                                                @foreach (array_slice($project->technologies_array, 0, 3) as $tech)
                                                     <span class="tech-tag">{{ $tech }}</span>
                                                 @endforeach
-                                                @if(count($project->technologies_array) > 3)
-                                                    <span class="tech-tag">+{{ count($project->technologies_array) - 3 }}</span>
+                                                @if (count($project->technologies_array) > 3)
+                                                    <span
+                                                        class="tech-tag">+{{ count($project->technologies_array) - 3 }}</span>
                                                 @endif
                                             </div>
                                         </td>
@@ -90,12 +112,12 @@
                                         <td class="text-center">{{ $project->order }}</td>
                                         <td>
                                             <div class="action-buttons">
-                                                <a href="{{ route('admin.projects.edit', $project) }}" class="action-btn edit"
-                                                    title="Modifier">
+                                                <a href="{{ route('admin.projects.edit', $project) }}"
+                                                    class="action-btn edit" title="Modifier">
                                                     ✎
                                                 </a>
-                                                <form action="{{ route('admin.projects.destroy', $project) }}" method="POST"
-                                                    class="inline"
+                                                <form action="{{ route('admin.projects.destroy', $project) }}"
+                                                    method="POST" class="inline"
                                                     onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce projet ?');">
                                                     @csrf
                                                     @method('DELETE')

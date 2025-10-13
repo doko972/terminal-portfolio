@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Project extends Model
@@ -69,5 +70,17 @@ class Project extends Model
     public function scopeOrdered($query)
     {
         return $query->orderBy('order', 'asc')->orderBy('completed_at', 'desc');
+    }
+
+    // RELATION AVEC LES IMAGES
+    public function images()
+    {
+        return $this->hasMany(ProjectImage::class)->orderBy('order', 'asc');
+    }
+
+    // Obtenir l'image principale
+    public function getMainImageAttribute()
+    {
+        return $this->images()->where('is_main', true)->first();
     }
 }
