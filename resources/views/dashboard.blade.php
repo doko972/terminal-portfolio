@@ -73,11 +73,12 @@
                         <span class="action-badge">→</span>
                     </a>
 
-                    <div class="action-card disabled">
+                    {{-- <a href="{{ route('contact') }}" class="action-card">
                         <span class="action-icon">📧</span>
                         <span class="action-title">Messages</span>
-                        <span class="action-badge">Bientôt</span>
-                    </div>
+                        <span class="action-badge">→</span>
+                    </a> --}}
+
                 </div>
             </div>
 

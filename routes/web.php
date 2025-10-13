@@ -33,4 +33,8 @@ Route::get('/api/project/{id}', function($id) {
     return response()->json($project);
 })->name('api.project');
 
+// Routes Contact
+Route::get('/contact', [App\Http\Controllers\ContactController::class, 'index'])->name('contact');
+Route::post('/contact', [App\Http\Controllers\ContactController::class, 'send'])->name('contact.send');
+
 require __DIR__.'/auth.php';

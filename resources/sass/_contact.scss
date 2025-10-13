@@ -1,0 +1,245 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.terminal-section {
+    padding: 60px 20px;
+    min-height: calc(100vh - 80px);
+    background-color: #000;
+}
+
+.terminal-window {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #0a0a0a;
+    border: 2px solid #0ee027;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(14, 224, 39, 0.3);
+    overflow: hidden;
+}
+
+.terminal-header {
+    background-color: #1a1a1a;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #0ee027;
+}
+
+.terminal-title {
+    color: #0ee027;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+}
+
+.terminal-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.terminal-buttons span {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.btn-close {
+    background-color: #ff5f56;
+}
+
+.btn-minimize {
+    background-color: #ffbd2e;
+}
+
+.btn-maximize {
+    background-color: #27c93f;
+}
+
+.terminal-body {
+    padding: 30px;
+    color: #0ee027;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    color: #0ee027;
+    text-shadow: 0 0 10px #0ee027;
+}
+
+.prompt {
+    color: #0ee027;
+    font-weight: 700;
+}
+
+/* Messages */
+.terminal-message {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.terminal-message.success {
+    background-color: rgba(14, 224, 39, 0.1);
+    border-left: 3px solid #0ee027;
+}
+
+.terminal-message.error {
+    background-color: rgba(255, 59, 48, 0.1);
+    border-left: 3px solid #ff3b30;
+    color: #ff3b30;
+}
+
+/* Contact Info */
+.contact-info {
+    margin-bottom: 30px;
+}
+
+.terminal-line {
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.terminal-link {
+    color: #0ee027;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.terminal-link:hover {
+    text-shadow: 0 0 10px #0ee027;
+    text-decoration: underline;
+}
+
+.terminal-separator {
+    color: #0ee027;
+    opacity: 0.3;
+    margin: 20px 0;
+}
+
+/* Formulaire */
+.contact-form {
+    margin-top: 30px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.terminal-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #0ee027;
+}
+
+.terminal-input {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #000;
+    border: 1px solid #0ee027;
+    border-radius: 4px;
+    color: #0ee027;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.terminal-input:focus {
+    outline: none;
+    box-shadow: 0 0 15px rgba(14, 224, 39, 0.4);
+    border-color: #0ee027;
+}
+
+.terminal-input.error {
+    border-color: #ff3b30;
+}
+
+.terminal-input::placeholder {
+    color: rgba(14, 224, 39, 0.4);
+}
+
+textarea.terminal-input {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.error-message {
+    display: block;
+    color: #ff3b30;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+/* Bouton */
+.terminal-button {
+    background-color: transparent;
+    border: 2px solid #0ee027;
+    color: #0ee027;
+    padding: 15px 30px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-radius: 4px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.terminal-button:hover {
+    background-color: #0ee027;
+    color: #000;
+    box-shadow: 0 0 20px rgba(14, 224, 39, 0.5);
+    transform: translateY(-2px);
+}
+
+.terminal-button:active {
+    transform: translateY(0);
+}
+
+.terminal-footer {
+    margin-top: 30px;
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+/* Animation blink */
+@keyframes blink {
+
+    0%,
+    50% {
+        opacity: 1;
+    }
+
+    51%,
+    100% {
+        opacity: 0;
+    }
+}
+
+.blink {
+    animation: blink 1s infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .terminal-section {
+        padding: 30px 15px;
+    }
+
+    .terminal-body {
+        padding: 20px;
+    }
+
+    .section-title {
+        font-size: 1.2rem;
+    }
+
+    .terminal-input {
+        font-size: 16px;
+        /* Évite le zoom sur iOS */
+    }
+}

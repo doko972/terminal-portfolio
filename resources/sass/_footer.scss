@@ -6,6 +6,7 @@ footer {
   text-align: center;
   @include box-glow($shadow-color);
   margin-top: $spacing-xxl;
+  z-index: 10;
 }
 
 .footer-content {
@@ -83,4 +84,10 @@ footer {
       color: $primary-color;
     }
   }
+}
+footer .social-links a {
+    pointer-events: auto;
+    cursor: pointer;
+    position: relative;
+    z-index: 11;
 }
