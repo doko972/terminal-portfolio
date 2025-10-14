@@ -5,21 +5,20 @@
 @section('content')
 <section id="timeline" class="timeline-section">
     <div class="container">
-        <!-- En-tête avec stats -->
-        <div class="timeline-header">
-            <div class="terminal-window-header">
-                <span class="terminal-title">> parcours.sh</span>
-                <div class="terminal-buttons">
-                    <span class="btn-close"></span>
-                    <span class="btn-minimize"></span>
-                    <span class="btn-maximize"></span>
-                </div>
+<div class="timeline-header">
+    <div class="terminal-window">
+        <div class="terminal-window-header">
+            <span class="terminal-title">> parcours.sh</span>
+            <div class="terminal-buttons">
+                <span class="btn-close"></span>
+                <span class="btn-minimize"></span>
+                <span class="btn-maximize"></span>
             </div>
-
+        </div>
+        <div class="terminal-window-body">
             <h1 class="section-title">
                 <span class="prompt">root@portfolio:~$</span> cat mon_parcours.txt
             </h1>
-
             <!-- Statistiques -->
             <div class="stats-grid">
                 <div class="stat-card">
@@ -39,6 +38,8 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
 
         <!-- Filtres par type -->
         <div class="timeline-filters">

@@ -27,22 +27,31 @@
     margin-bottom: 60px;
 }
 
-.terminal-window-header {
+/* Fenêtre terminal complète */
+.terminal-window {
     background-color: #1a1a1a;
+    border: 2px solid #0ee027;
+    border-radius: 8px;
+    max-width: 900px;
+    margin: 0 auto;
+    box-shadow: 0 0 30px rgba(14, 224, 39, 0.3);
+    overflow: hidden;
+}
+
+/* Header de la fenêtre */
+.terminal-window-header {
+    background-color: #2a2a2a;
     padding: 10px 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid #0ee027;
-    border-bottom: none;
-    border-radius: 8px 8px 0 0;
-    max-width: 600px;
-    margin: 0 auto 20px;
+    border-bottom: 1px solid #0ee027;
 }
 
 .terminal-title {
     color: #0ee027;
     font-size: 14px;
+    font-weight: 500;
 }
 
 .terminal-buttons {
@@ -55,17 +64,31 @@
     height: 12px;
     border-radius: 50%;
     display: inline-block;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.terminal-buttons span:hover {
+    opacity: 0.7;
 }
 
 .btn-close { background-color: #ff5f56; }
 .btn-minimize { background-color: #ffbd2e; }
 .btn-maximize { background-color: #27c93f; }
 
+/* Body de la fenêtre terminal */
+.terminal-window-body {
+    padding: 30px 20px;
+    background-color: #1a1a1a;
+    min-height: 300px;
+}
+
 .section-title {
-    font-size: 2rem;
-    margin-bottom: 40px;
+    font-size: 1.5rem;
+    margin-bottom: 30px;
     color: #0ee027;
     text-shadow: 0 0 20px rgba(14, 224, 39, 0.5);
+    text-align: left;
 }
 
 .prompt {
@@ -73,10 +96,97 @@
     color: #0ee027;
 }
 
+/* Grille des statistiques */
+/* Grille des statistiques */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+    padding: 0 20px;
+}
+
+.stat-card {
+    background-color: #0a0a0a;
+    border: 1px solid #0ee027;
+    border-radius: 6px;
+    padding: 25px 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(14, 224, 39, 0.3);
+    border-color: #0ee027;
+    background-color: #0f0f0f;
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #0ee027;
+    margin-bottom: 5px;
+    line-height: 1;
+    text-shadow: 0 0 15px rgba(14, 224, 39, 0.5);
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: #0ee027;
+    opacity: 0.8;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+        padding: 0 10px;
+    }
+    
+    .stat-card {
+        padding: 20px 15px;
+    }
+    
+    .stat-icon {
+        font-size: 2rem;
+        width: 50px;
+        height: 50px;
+    }
+    
+    .stat-value {
+        font-size: 2rem;
+    }
+    
+    .stat-label {
+        font-size: 0.8rem;
+    }
+}
+
 /* ========== STATISTIQUES ========== */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    // grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
     max-width: 800px;
     margin: 0 auto 40px;

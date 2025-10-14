@@ -73,11 +73,11 @@
                         <span class="action-badge">→</span>
                     </a>
 
-                    {{-- <a href="{{ route('contact') }}" class="action-card">
-                        <span class="action-icon">📧</span>
-                        <span class="action-title">Messages</span>
+                    <a href="{{ route('admin.experiences.index') }}" class="action-card">
+                        <span class="action-icon">💼</span>
+                        <span class="action-title">Expériences</span>
                         <span class="action-badge">→</span>
-                    </a> --}}
+                    </a>
 
                 </div>
             </div>

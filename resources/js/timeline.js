@@ -86,8 +86,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function animateCounter(element) {
         const target = parseFloat(element.textContent);
-        const duration = 2000; // 2 secondes
-        const increment = target / (duration / 16); // 60fps
+        const duration = 2000;
+        const increment = target / (duration / 16);
         let current = 0;
         
         const timer = setInterval(() => {
@@ -96,7 +96,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 element.textContent = target;
                 clearInterval(timer);
             } else {
-                // Arrondir pour les décimales
                 if (target % 1 !== 0) {
                     element.textContent = current.toFixed(1);
                 } else {
