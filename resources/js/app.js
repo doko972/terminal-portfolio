@@ -349,3 +349,23 @@ function updateFileInput(input) {
   selectedFiles.forEach(file => dataTransfer.items.add(file));
   input.files = dataTransfer.files;
 }
+
+// ============================================
+// 7. CODE SECRET - CTRL + SHIFT + L
+// ============================================
+document.addEventListener('keydown', (e) => {
+  // CTRL + SHIFT + L
+  if (e.ctrlKey && e.shiftKey && e.key === 'L') {
+    e.preventDefault();
+    const hiddenLink = document.getElementById('hiddenLoginLink');
+    if (hiddenLink) {
+      hiddenLink.style.display = 'block';
+      hiddenLink.style.opacity = '0';
+      setTimeout(() => {
+        hiddenLink.style.transition = 'opacity 0.5s ease';
+        hiddenLink.style.opacity = '1';
+      }, 10);
+      console.log('%c> Admin access activated', 'color: #0ee027; font-weight: bold; font-family: monospace;');
+    }
+  }
+});
