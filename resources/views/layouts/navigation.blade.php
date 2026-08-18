@@ -32,6 +32,11 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('admin.cv.edit') }}" class="{{ request()->routeIs('admin.cv.*') ? 'active' : '' }}">
+                        CV
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.*') ? 'active' : '' }}">
                         Mon profil
                     </a>

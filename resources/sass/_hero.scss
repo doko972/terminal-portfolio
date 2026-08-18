@@ -22,6 +22,14 @@
   }
 }
 
+// Regroupe les appels à l'action du hero (explorer / télécharger le CV)
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-xs;
+  justify-content: center;
+}
+
 // Bouton CTA (Call To Action)
 .cta-button {
   display: inline-block;
@@ -32,8 +40,14 @@
   font-weight: $font-weight-normal;
   background-color: transparent;
   @include hover-neon;
-  
+
   &:hover {
     cursor: pointer;
   }
+}
+
+// Variante secondaire : présente mais visuellement en retrait du CTA principal
+.cta-button.cta-secondary {
+  @include bg-overlay(0.04);
+  border-style: dashed;
 }

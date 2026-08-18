@@ -1,0 +1,52 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// ============================================
+// ADMINISTRATION DU CV TÉLÉCHARGEABLE
+// ============================================
+
+.cv-status {
+  border: 1px solid $border-color;
+  @include bg-overlay(0.04);
+  padding: $spacing-sm;
+  margin-bottom: $spacing-md;
+
+  p {
+    margin: 0;
+  }
+
+  &.offline {
+    opacity: 0.75;
+    border-style: dashed;
+  }
+}
+
+.cv-meta {
+  list-style: none;
+  margin: $spacing-xs 0 0;
+  padding: 0;
+  font-size: 0.9rem;
+  opacity: 0.9;
+
+  li + li {
+    margin-top: 4px;
+  }
+}
+
+.cv-delete-form {
+  margin-top: $spacing-md;
+  padding-top: $spacing-sm;
+  border-top: 1px dashed $border-color;
+}
+
+// Action destructrice : rouge, pour se distinguer nettement des boutons verts
+.terminal-btn.danger {
+  border-color: #ff4444;
+  color: #ff4444;
+
+  &:hover {
+    background-color: #ff4444;
+    color: $bg-color;
+    box-shadow: 0 0 20px rgba(255, 68, 68, 0.5);
+  }
+}

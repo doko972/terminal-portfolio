@@ -11,7 +11,14 @@
                     Développeur Web & Technicien IT<span class="terminal-cursor"></span>
                 </h1>
                 <p>> Création d'applications web modernes et solutions système</p>
-                <a href="#about" class="cta-button">./explorer_portfolio.sh</a>
+                <div class="hero-actions">
+                    <a href="#about" class="cta-button">./explorer_portfolio.sh</a>
+                    @if ($hasCv)
+                        <a href="{{ route('cv.download') }}" class="cta-button cta-secondary">
+                            ./telecharger_cv.pdf
+                        </a>
+                    @endif
+                </div>
             </div>
         </section>
 

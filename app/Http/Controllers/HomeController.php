@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Experience;
 use App\Models\Project;
+use App\Support\Cv;
 
 class HomeController extends Controller
 {
@@ -55,7 +56,11 @@ class HomeController extends Controller
             ),
         ];
 
-        return view('welcome', compact('projects', 'featuredProjects', 'allTechnologies', 'experiences', 'stats'));
+        // Le bouton de téléchargement du hero reste masqué tant qu'aucun CV
+        // n'a été mis en ligne depuis l'administration.
+        $hasCv = Cv::exists();
+
+        return view('welcome', compact('projects', 'featuredProjects', 'allTechnologies', 'experiences', 'stats', 'hasCv'));
     }
 
     /**

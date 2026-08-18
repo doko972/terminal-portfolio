@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Admin\ExperienceController as AdminExperienceController;
 use App\Http\Controllers\Admin\ProjectController as AdminProjectController;
+use App\Http\Controllers\Admin\CvController as AdminCvController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\CvController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TimelineController;
@@ -23,6 +25,10 @@ Route::get('/projet/{slug}', [HomeController::class, 'show'])->name('project.sho
 
 // Timeline / Parcours professionnel
 Route::get('/parcours', [TimelineController::class, 'index'])->name('timeline');
+
+// Téléchargement du CV (le fichier vit sur le disque privé : cette route est
+// son unique point d'accès public)
+Route::get('/cv', [CvController::class, 'download'])->name('cv.download');
 
 // Contact
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
@@ -74,6 +80,11 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('admin')->name('admin.'
 
     // CRUD Expériences
     Route::resource('experiences', AdminExperienceController::class)->except(['show']);
+
+    // CV téléchargeable
+    Route::get('cv', [AdminCvController::class, 'edit'])->name('cv.edit');
+    Route::post('cv', [AdminCvController::class, 'update'])->name('cv.update');
+    Route::delete('cv', [AdminCvController::class, 'destroy'])->name('cv.destroy');
 });
 
 /*
