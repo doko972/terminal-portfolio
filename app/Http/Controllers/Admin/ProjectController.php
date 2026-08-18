@@ -10,6 +10,33 @@ use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
+    /**
+     * Poids maximum par image, en kilo-octets. Une capture d'écran PNG dépasse
+     * facilement 2 Mo, d'où une limite volontairement large.
+     */
+    private const MAX_IMAGE_KB = 5120;
+
+    /** Le formulaire limite déjà à 10 images côté JS : on l'applique aussi ici. */
+    private const IMAGES_RULE = 'nullable|array|max:10';
+
+    private const IMAGE_RULE = 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:'.self::MAX_IMAGE_KB;
+
+    /**
+     * Messages explicites : par défaut Laravel annonce une taille en kilo-octets,
+     * peu parlant quand on vient de déposer une capture de 6 Mo.
+     */
+    private static function imageMessages(): array
+    {
+        $maxMo = round(self::MAX_IMAGE_KB / 1024, 1);
+
+        return [
+            'images.max' => 'Vous ne pouvez pas envoyer plus de 10 images à la fois.',
+            'images.*.image' => 'Le fichier :position n\'est pas une image valide.',
+            'images.*.mimes' => 'Format non supporté (image :position) : utilisez JPG, PNG, GIF ou WebP.',
+            'images.*.max' => "L'image :position est trop lourde : {$maxMo} Mo maximum.",
+        ];
+    }
+
     public function index()
     {
         $projects = Project::with('images')->ordered()->paginate(10);
@@ -27,14 +54,15 @@ class ProjectController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'technologies' => 'required|string',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'images' => self::IMAGES_RULE,
+            'images.*' => self::IMAGE_RULE,
             'url' => 'nullable|url',
             'github_url' => 'nullable|url',
             'status' => 'required|in:en_cours,termine,archive',
             'completed_at' => 'nullable|date',
             'is_featured' => 'boolean',
             'order' => 'integer|min:0',
-        ]);
+        ], self::imageMessages());
 
         // Générer le slug
         $validated['slug'] = Project::uniqueSlug($validated['title']);
@@ -87,7 +115,8 @@ class ProjectController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'technologies' => 'required|string',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'images' => self::IMAGES_RULE,
+            'images.*' => self::IMAGE_RULE,
             'url' => 'nullable|url',
             'github_url' => 'nullable|url',
             'status' => 'required|in:en_cours,termine,archive',
@@ -97,7 +126,7 @@ class ProjectController extends Controller
             'main_image_id' => 'nullable|exists:project_images,id',
             'delete_images' => 'nullable|array',
             'delete_images.*' => 'exists:project_images,id',
-        ]);
+        ], self::imageMessages());
 
         // Générer le slug (en s'ignorant soi-même pour rester idempotent)
         $validated['slug'] = Project::uniqueSlug($validated['title'], $project->id);
