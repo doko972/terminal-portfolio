@@ -134,13 +134,49 @@ php artisan serve
 ```
 
 # Le site sera accessible sur : http://localhost:8000
-# Créer un compte administrateur
 
-Accédez à : http://localhost:8000/register
-Créez votre compte
-Vérifiez votre email (si configuré)
-Connectez-vous sur /login
-Accédez à l'admin sur /admin/projects
+### Créer un compte administrateur
+
+L'inscription publique est désactivée : le portfolio n'a qu'un seul
+administrateur. Le compte se crée en ligne de commande.
+
+```bash
+php artisan tinker
+```
+```php
+App\Models\User::create([
+    'name' => 'Votre nom',
+    'email' => 'vous@example.com',
+    'password' => Hash::make('un-mot-de-passe-solide'),
+    'is_admin' => true,
+]);
+```
+
+Connectez-vous ensuite sur `/se_logger`, puis l'administration est accessible
+sur `/admin/projects` et `/admin/experiences`. Un compte sans `is_admin`
+reçoit un 403 sur ces pages.
+
+## 🚀 Déploiement
+
+```bash
+git pull
+composer install --no-dev --optimize-autoloader
+npm ci && npm run build
+php artisan migrate --force
+php artisan optimize          # config + routes + vues en cache
+```
+
+Variables requises dans le `.env` de production :
+
+| Variable | Rôle |
+|---|---|
+| `RECAPTCHA_SITE_KEY` | Widget reCAPTCHA du formulaire de contact |
+| `RECAPTCHA_SECRET_KEY` | Vérification serveur du captcha |
+| `CONTACT_TO_ADDRESS` | Destinataire du formulaire (optionnel) |
+
+`SESSION_DRIVER=database` requiert la table `sessions`, créée par les
+migrations. Après tout changement de `.env`, relancer `php artisan optimize`.
+
 ```bash
 Structure du Projet
 portfolio-terminal/
