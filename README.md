@@ -141,16 +141,15 @@ L'inscription publique est désactivée : le portfolio n'a qu'un seul
 administrateur. Le compte se crée en ligne de commande.
 
 ```bash
-php artisan tinker
+php artisan portfolio:make-admin vous@example.com --name="Votre nom"
 ```
-```php
-App\Models\User::create([
-    'name' => 'Votre nom',
-    'email' => 'vous@example.com',
-    'password' => Hash::make('un-mot-de-passe-solide'),
-    'is_admin' => true,
-]);
-```
+
+Le mot de passe est demandé de façon masquée. Si le compte existe déjà, la
+commande se contente de le promouvoir administrateur.
+
+> `is_admin` n'est pas mass-assignable : un `User::create([... 'is_admin' =>
+> true])` dans tinker créerait un compte **sans** droits d'administration.
+> Utilisez la commande.
 
 Connectez-vous ensuite sur `/se_logger`, puis l'administration est accessible
 sur `/admin/projects` et `/admin/experiences`. Un compte sans `is_admin`
