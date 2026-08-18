@@ -20,13 +20,16 @@
     <!-- Animation Matrix en arrière-plan -->
     <canvas id="matrix-bg"></canvas>
 
-    <div class="min-h-screen">
-        @include('layouts.navigation')
+    <div class="page-shell">
+        {{-- En-tête public : ce layout sert des pages accessibles aux visiteurs
+             anonymes (contact, parcours), il ne doit donc pas exposer la
+             navigation d'administration. --}}
+        @include('layouts.partials.public-header')
 
         <!-- Page Heading -->
         @isset($header)
             <header class="admin-header">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <div class="admin-header-inner">
                     {{ $header }}
                 </div>
             </header>
@@ -38,20 +41,7 @@
         </main>
     </div>
 
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="footer-content">
-            <h3 class="section-title">Contact</h3>
-            <div class="social-links">
-                <a href="david.grougi@gmail.com">Email</a>
-                <a href="https://github.com/doko972" target="_blank">GitHub</a>
-            </div>
-            <p style="margin-top: 30px; opacity: 0.7">
-                © {{ date('Y') }} Terminal Portfolio | David GROUGI
-            </p>
-            <p style="opacity: 0.5; font-size: 0.9rem">user@terminal:~$</p>
-        </div>
-    </footer>
+    @include('layouts.partials.public-footer')
 </body>
 
 </html>

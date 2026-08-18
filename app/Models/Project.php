@@ -3,7 +3,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Project extends Model
@@ -35,22 +34,40 @@ class Project extends Model
         return json_decode($this->technologies, true) ?? [];
     }
     
-    // Mutateur pour le slug automatique
-    public static function boot()
+    // Slug automatique si aucun n'est fourni
+    protected static function boot()
     {
         parent::boot();
-        
-        static::creating(function ($project) {
+
+        static::saving(function ($project) {
             if (empty($project->slug)) {
-                $project->slug = Str::slug($project->title);
+                $project->slug = static::uniqueSlug($project->title, $project->getKey());
             }
         });
-        
-        static::updating(function ($project) {
-            if ($project->isDirty('title') && empty($project->slug)) {
-                $project->slug = Str::slug($project->title);
-            }
-        });
+    }
+
+    /**
+     * Construit un slug unique à partir d'un titre.
+     *
+     * La colonne `slug` porte une contrainte UNIQUE : sans suffixe, deux projets
+     * au même titre provoquent une QueryException. On incrémente donc jusqu'à
+     * trouver un slug libre, en ignorant le projet en cours d'édition.
+     */
+    public static function uniqueSlug(string $title, $ignoreId = null): string
+    {
+        $base = Str::slug($title) ?: 'projet';
+        $slug = $base;
+        $suffix = 2;
+
+        while (
+            static::where('slug', $slug)
+                ->when($ignoreId, fn ($query) => $query->whereKeyNot($ignoreId))
+                ->exists()
+        ) {
+            $slug = $base.'-'.$suffix++;
+        }
+
+        return $slug;
     }
     
     /**

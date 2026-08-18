@@ -7,17 +7,18 @@ use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
 // Routes accessibles aux invités (non connectés)
 Route::middleware('guest')->group(function () {
-    // Inscription (Register -> doko972)
-    Route::get('/doko972', [RegisteredUserController::class, 'create'])
-        ->name('register');
-    
-    Route::post('/doko972', [RegisteredUserController::class, 'store']);
+    // L'inscription publique est volontairement désactivée : ce portfolio n'a
+    // qu'un seul administrateur. Pour créer un compte :
+    //   php artisan tinker
+    //   App\Models\User::create([
+    //       'name' => '…', 'email' => '…',
+    //       'password' => Hash::make('…'), 'is_admin' => true,
+    //   ]);
 
     // Connexion (Login -> se_logger)
     Route::get('/se_logger', [AuthenticatedSessionController::class, 'create'])

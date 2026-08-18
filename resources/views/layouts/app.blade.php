@@ -22,13 +22,13 @@
     <!-- Animation Matrix en arrière-plan -->
     <canvas id="matrix-bg"></canvas>
 
-    <div class="min-h-screen">
+    <div class="page-shell">
         @include('layouts.navigation')
 
         <!-- Page Heading -->
         @isset($header)
             <header class="admin-header">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <div class="admin-header-inner">
                     {{ $header }}
                 </div>
             </header>

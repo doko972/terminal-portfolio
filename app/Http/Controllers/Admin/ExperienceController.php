@@ -50,8 +50,14 @@ class ExperienceController extends Controller
             'order' => 'nullable|integer',
         ]);
 
+        // Cases à cocher : le navigateur n'envoie rien quand elles sont
+        // décochées, il faut donc les résoudre explicitement — sinon la clé
+        // est absente de $validated et la valeur précédente est conservée.
+        $validated['is_current'] = $request->boolean('is_current');
+        $validated['is_visible'] = $request->boolean('is_visible');
+
         // Si "is_current" est coché, on met end_date à null
-        if ($request->has('is_current') && $request->is_current) {
+        if ($validated['is_current']) {
             $validated['end_date'] = null;
         }
 
@@ -87,14 +93,6 @@ class ExperienceController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Experience $experience)
-    {
-        return view('admin.experiences.show', compact('experience'));
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Experience $experience)
@@ -125,8 +123,14 @@ class ExperienceController extends Controller
             'order' => 'nullable|integer',
         ]);
 
+        // Cases à cocher : le navigateur n'envoie rien quand elles sont
+        // décochées, il faut donc les résoudre explicitement — sinon la clé
+        // est absente de $validated et la valeur précédente est conservée.
+        $validated['is_current'] = $request->boolean('is_current');
+        $validated['is_visible'] = $request->boolean('is_visible');
+
         // Si "is_current" est coché, on met end_date à null
-        if ($request->has('is_current') && $request->is_current) {
+        if ($validated['is_current']) {
             $validated['end_date'] = null;
         }
 

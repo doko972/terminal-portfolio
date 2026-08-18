@@ -58,66 +58,12 @@
     <canvas id="matrix-canvas"></canvas>
 
     <!-- Header -->
-<header>
-    <div class="header-content">
-        <div class="logo" id="secretLogo" onclick="secretClick()">
-            <img src="{{ asset('images/logo.png') }}" alt="Logo Terminal Portfolio">
-        </div>
-        <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()" aria-label="Menu">
-            <div class="burger-icon">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </button>
-        <nav id="mainNav">
-            <ul>
-                <li><a href="{{ url('/') }}#home">Accueil</a></li>
-                <li><a href="{{ url('/') }}#about">À propos</a></li>
-                <li><a href="{{ url('/') }}#skills-web">Web Dev</a></li>
-                <li><a href="{{ url('/') }}#skills-sys">Systèmes</a></li>
-                <li><a href="{{ url('/') }}#contact">Contact</a></li>
-                @auth
-                    <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                    <li>
-                        <form method="POST" action="{{ route('logout') }}" style="display: inline;">
-                            @csrf
-                            <a href="{{ route('logout') }}"
-                               onclick="event.preventDefault(); this.closest('form').submit();">
-                                Déconnexion
-                            </a>
-                        </form>
-                    </li>
-                @else
-                    <li id="hiddenLoginLink" style="display: none;">
-                        <a href="{{ route('login') }}">Connexion</a>
-                    </li>
-                @endauth
-            </ul>
-        </nav>
-    </div>
-</header>
-
-    <!-- Overlay pour le menu -->
-    <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+    @include('layouts.partials.public-header')
 
     <!-- Contenu principal -->
     @yield('content')
 
     <!-- Footer -->
-<footer id="contact">
-    <div class="footer-content">
-        <h3 class="section-title">Contact</h3>
-        <div class="social-links">
-            <a href="mailto:david.grougi@gmail.com">Email</a>
-            <a href="https://github.com/doko972" target="_blank">GitHub</a>
-            <a href="{{ route('contact') }}">Formulaire de contact</a>
-        </div>
-            <p style="margin-top: 30px; opacity: 0.7">
-                © {{ date('Y') }} Terminal Portfolio | David GROUGI
-            </p>
-        <p style="opacity: 0.5; font-size: 0.9rem">user@terminal:~$</p>
-    </div>
-</footer>
+    @include('layouts.partials.public-footer')
 </body>
 </html>

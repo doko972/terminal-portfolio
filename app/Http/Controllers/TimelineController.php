@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Experience;
-use Illuminate\Http\Request;
 
 class TimelineController extends Controller
 {
@@ -24,7 +23,7 @@ class TimelineController extends Controller
 
         // Statistiques
         $stats = [
-            'total_years' => $this->calculateTotalYears($workExperiences),
+            'total_years' => Experience::totalYears($workExperiences),
             'companies_count' => $workExperiences->unique('company')->count(),
             'certifications_count' => $certifications->count(),
         ];
@@ -36,25 +35,5 @@ class TimelineController extends Controller
             'certifications',
             'stats'
         ));
-    }
-
-    /**
-     * Calculer le nombre total d'années d'expérience
-     */
-    private function calculateTotalYears($experiences)
-    {
-        $totalMonths = 0;
-
-        foreach ($experiences as $experience) {
-            $start = $experience->start_date;
-            $end = $experience->is_current ? now() : $experience->end_date;
-
-            if ($end) {
-                $diff = $start->diff($end);
-                $totalMonths += ($diff->y * 12) + $diff->m;
-            }
-        }
-
-        return round($totalMonths / 12, 1);
     }
 }

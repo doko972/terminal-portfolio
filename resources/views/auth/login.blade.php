@@ -66,10 +66,6 @@
         Se connecter
     </button>
 
-    <!-- Lien inscription -->
-    <div class="auth-alternate">
-        Pas encore de compte ? 
-        <a href="{{ route('register') }}">S'inscrire</a>
-    </div>
+    {{-- Inscription publique désactivée : compte administrateur unique. --}}
 </form>
 @endsection

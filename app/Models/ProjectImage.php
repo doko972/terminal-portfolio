@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 
 class ProjectImage extends Model
@@ -40,27 +39,9 @@ class ProjectImage extends Model
         return $query->orderBy('order', 'asc');
     }
 
-    public function images(): HasMany
+    // URL publique de cette image
+    public function getUrlAttribute(): string
     {
-        return $this->hasMany(ProjectImage::class);
-    }
-
-    // Image principale
-    public function mainImage()
-    {
-        return $this->hasOne(ProjectImage::class)->where('is_main', true);
-    }
-
-    // Images triées
-    public function orderedImages()
-    {
-        return $this->hasMany(ProjectImage::class)->orderBy('order', 'asc');
-    }
-
-    // Accesseur pour obtenir l'URL de l'image principale
-    public function getMainImageUrlAttribute()
-    {
-        $mainImage = $this->mainImage;
-        return $mainImage ? Storage::url($mainImage->image_path) : null;
+        return Storage::url($this->image_path);
     }
 }

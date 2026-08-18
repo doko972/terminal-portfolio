@@ -132,6 +132,10 @@
                                                 </span>
                                             @endif
                                             <div class="project-links">
+                                                <a href="{{ route('project.show', $project->slug) }}"
+                                                    class="project-link" title="Lien permanent">
+                                                    <span class="prompt">🔗</span>
+                                                </a>
                                                 @if ($project->url)
                                                     <a href="{{ $project->url }}" target="_blank" class="project-link"
                                                         title="Voir le site">
@@ -213,6 +217,10 @@
                                         </span>
                                     @endif
                                     <div class="project-links">
+                                        <a href="{{ route('project.show', $project->slug) }}" class="project-link"
+                                            title="Lien permanent">
+                                            <span class="prompt">🔗</span>
+                                        </a>
                                         @if ($project->url)
                                             <a href="{{ $project->url }}" target="_blank" class="project-link" title="Voir le site">
                                                 <span class="prompt">🌐</span>

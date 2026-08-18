@@ -7,13 +7,12 @@ use App\Models\Project;
 use App\Models\ProjectImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Project::ordered()->paginate(10);
+        $projects = Project::with('images')->ordered()->paginate(10);
         return view('admin.projects.index', compact('projects'));
     }
 
@@ -38,11 +37,15 @@ class ProjectController extends Controller
         ]);
 
         // Générer le slug
-        $validated['slug'] = Str::slug($validated['title']);
+        $validated['slug'] = Project::uniqueSlug($validated['title']);
 
         // Transformer les technologies en JSON
         $technologies = array_map('trim', explode(',', $validated['technologies']));
         $validated['technologies'] = json_encode($technologies);
+
+        // Une case décochée n'est pas envoyée par le navigateur : sans cette
+        // ligne la clé serait absente de $validated.
+        $validated['is_featured'] = $request->boolean('is_featured');
 
         // Supprimer les images du tableau validated (on les gère après)
         unset($validated['images']);
@@ -96,12 +99,16 @@ class ProjectController extends Controller
             'delete_images.*' => 'exists:project_images,id',
         ]);
 
-        // Générer le slug
-        $validated['slug'] = Str::slug($validated['title']);
+        // Générer le slug (en s'ignorant soi-même pour rester idempotent)
+        $validated['slug'] = Project::uniqueSlug($validated['title'], $project->id);
 
         // Transformer les technologies en JSON
         $technologies = array_map('trim', explode(',', $validated['technologies']));
         $validated['technologies'] = json_encode($technologies);
+
+        // Idem qu'à la création : sans ça, décocher « mis en avant » n'aurait
+        // aucun effet puisque la clé serait absente de $validated.
+        $validated['is_featured'] = $request->boolean('is_featured');
 
         // Supprimer les champs non nécessaires
         unset($validated['images'], $validated['main_image_id'], $validated['delete_images']);

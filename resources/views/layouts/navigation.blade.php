@@ -27,6 +27,11 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('admin.experiences.index') }}" class="{{ request()->routeIs('admin.experiences.*') ? 'active' : '' }}">
+                        Expériences
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.*') ? 'active' : '' }}">
                         Mon profil
                     </a>

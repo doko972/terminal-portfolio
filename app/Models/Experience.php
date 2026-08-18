@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -63,6 +64,43 @@ class Experience extends Model
     }
 
     /**
+     * Date de fin effective : aujourd'hui si le poste est en cours, sinon la
+     * date de fin renseignée. Renvoie null si l'expérience n'est ni en cours
+     * ni terminée — auquel cas sa durée est inconnue et ne doit pas être
+     * comptabilisée.
+     */
+    public function getEffectiveEndDateAttribute(): ?Carbon
+    {
+        if ($this->is_current) {
+            return Carbon::now();
+        }
+
+        return $this->end_date ? Carbon::parse($this->end_date) : null;
+    }
+
+    /**
+     * Total d'années cumulées sur une collection d'expériences, arrondi à
+     * une décimale. Les expériences sans date de fin exploitable sont ignorées.
+     */
+    public static function totalYears($experiences): float
+    {
+        $totalMonths = 0;
+
+        foreach ($experiences as $experience) {
+            $end = $experience->effective_end_date;
+
+            if (! $end) {
+                continue;
+            }
+
+            $diff = Carbon::parse($experience->start_date)->diff($end);
+            $totalMonths += ($diff->y * 12) + $diff->m;
+        }
+
+        return round($totalMonths / 12, 1);
+    }
+
+    /**
      * Récupérer l'URL du logo
      */
     public function getLogoUrlAttribute()
@@ -78,13 +116,13 @@ class Experience extends Model
      */
     public function getDurationAttribute()
     {
-        $end = $this->is_current ? now() : $this->end_date;
-        
+        $end = $this->effective_end_date;
+
         if (!$end) {
             return 'Durée non spécifiée';
         }
 
-        $diff = \Carbon\Carbon::parse($this->start_date)->diff(\Carbon\Carbon::parse($end));
+        $diff = Carbon::parse($this->start_date)->diff($end);
         
         $years = $diff->y;
         $months = $diff->m;
