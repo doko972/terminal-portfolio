@@ -7,6 +7,7 @@ Alpine.start();
 import './portfolio';
 import './experiences_form'
 import './timeline';
+import './sanitize-uploads';
 
 // ============================================
 // 1. MENU BURGER - TOGGLE & GESTION
